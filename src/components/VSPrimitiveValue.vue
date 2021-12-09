@@ -5,14 +5,14 @@
 </template>
 
 <script>
-import { formatPrimitiveValueToCode, } from '@/helpers/Formatter.js'
-
 /**
  * VSPrimitiveValue
  *
  * Formatted displaying & colors of a primitive `value`, depending
  * of its given `type`.
  */
+
+import { formatPrimitiveValueToCode, } from '@/helpers/Formatter.js'
 
 export default {
   name: 'VSPrimitiveValue',

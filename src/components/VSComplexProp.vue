@@ -16,17 +16,6 @@
 </template>
 
 <script>
-import { sortBy, } from 'lodash'
-import {
-  formatFromNativeStrType,
-  formatPrimitiveValueToCode,
-  convertPropObjectToFields,
-  convertPropArrayToFields,
-} from '@/helpers/Formatter.js'
-import { isValidPropName, isValidCodePrimitiveValue, } from '@/helpers/Validator.js'
-import VSPropObjectField from '@/components/VSPropObjectField.vue'
-import VSPropArrayField from '@/components/VSPropArrayField.vue'
-
 /**
  * VSComplexProp
  *
@@ -37,6 +26,16 @@ import VSPropArrayField from '@/components/VSPropArrayField.vue'
  *   - Centralized management for prop's updates (additions, deletions,
  *     updates)
  */
+import { sortBy, } from 'lodash'
+import {
+  formatFromNativeStrType,
+  formatPrimitiveValueToCode,
+  convertPropObjectToFields,
+  convertPropArrayToFields,
+} from '@/helpers/Formatter.js'
+import { isValidPropName, isValidCodePrimitiveValue, } from '@/helpers/Validator.js'
+import VSPropObjectField from '@/components/VSPropObjectField.vue'
+import VSPropArrayField from '@/components/VSPropArrayField.vue'
 
 export default {
   name: 'VSComplexProp',

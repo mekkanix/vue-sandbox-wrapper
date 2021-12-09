@@ -205,9 +205,6 @@
 </template>
 
 <script>
-import { isValidPropName, isValidCodePrimitiveValue, } from '@/helpers/Validator.js'
-import VSPrimitiveValue from '@/components/VSPrimitiveValue.vue'
-
 /**
  * VSPropArrayField
  *
@@ -216,6 +213,9 @@ import VSPrimitiveValue from '@/components/VSPrimitiveValue.vue'
  * This component uses the "recursive component" system to allow
  * unlimited depth levels.
  */
+
+import { isValidPropName, isValidCodePrimitiveValue, } from '@/helpers/Validator.js'
+import VSPrimitiveValue from '@/components/VSPrimitiveValue.vue'
 
 export default {
   name: 'VSPropArrayField',

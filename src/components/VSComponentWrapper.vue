@@ -70,13 +70,6 @@
 </template>
 
 <script>
-import Vue from 'vue'
-import { formatFromNativeType, formatFromNativeToNativeStrType, } from '@/helpers/Formatter.js'
-import { isOfPrimitiveType, } from '@/helpers/Type.js'
-import VSComplexProp from '@/components/VSComplexProp.vue'
-import VSPropObjectField from '@/components/VSPropObjectField.vue'
-import VSPropArrayField from '@/components/VSPropArrayField.vue'
-
 /**
  * VSComponentWrapper
  *
@@ -84,6 +77,13 @@ import VSPropArrayField from '@/components/VSPropArrayField.vue'
  * a component rendering area alongside a management panel
  * allowing live props' update through dedicated inputs.
  */
+
+import Vue from 'vue'
+import { formatFromNativeType, formatFromNativeToNativeStrType, } from '@/helpers/Formatter.js'
+import { isOfPrimitiveType, } from '@/helpers/Type.js'
+import VSComplexProp from '@/components/VSComplexProp.vue'
+import VSPropObjectField from '@/components/VSPropObjectField.vue'
+import VSPropArrayField from '@/components/VSPropArrayField.vue'
 
 export default {
   name: 'VSComponentWrapper',
