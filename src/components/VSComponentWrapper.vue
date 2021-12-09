@@ -100,7 +100,7 @@ export default {
      * This object contains a compiled Vue component and some related
      * meta informations.
      *
-     * Its format must follow the rules below:
+     * Its format must comply to the following rules:
      * @property component {object} [required] - Vue-compiled component.
      * @property filepath {object} [optional] - Component relative file path.
      */
@@ -173,6 +173,11 @@ export default {
       const componentInstance = new Vue(Object.assign(instanceConfig, this.vsComponent.component))
       return componentInstance.$mount().$el.outerHTML
     },
+    /**
+     * VueSandbox-formatted fields generated from component's props.
+     *
+     * @return  {array}
+     */
     fieldsFormattedProps () {
       let fmtProps = []
       if (this.vsComponent.component.props) {
@@ -191,6 +196,15 @@ export default {
   },
 
   methods: {
+    /**
+     * Returns a default prop value depending on the provided
+     * VueSandbox-formatted type (see `src/constants/Types.js`
+     * for details).
+     *
+     * @param {string} type - The VS-formatted type.
+     *
+     * @return {mixed}
+     */
     getDefaultPropValue (type) {
       switch (formatFromNativeType(type)) {
         case 'text':
@@ -205,14 +219,26 @@ export default {
           return []
       }
     },
-    parsePropValue (value) {
-      if (isOfPrimitiveType(value)) {
-        return this.getDefaultPropValue(value)
+    /**
+     * Parsing method used to get default value for component props,
+     * using different strategies depending on the component's
+     * prop definition way
+     * (details: https://vuejs.org/v2/guide/components-props.html).
+     *
+     * TODO:  Parse all definition cases (some are missing).
+     *
+     * @param {mixed} propDef - The component's prop definition.
+     *
+     * @return {mixed}
+     */
+    parsePropValue (propDef) {
+      if (isOfPrimitiveType(propDef)) {
+        return this.getDefaultPropDef(propDef)
       } else {
-        if (value.default) {
-          return typeof value.default === 'function' ? value.default() : value.default
-        } else if (value.type) {
-          return this.getDefaultPropValue(value.type)
+        if (propDef.default) {
+          return typeof propDef.default === 'function' ? propDef.default() : propDef.default
+        } else if (propDef.type) {
+          return this.getDefaultPropValue(propDef.type)
         }
       }
     },
