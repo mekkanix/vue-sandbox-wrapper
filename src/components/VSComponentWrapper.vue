@@ -97,7 +97,8 @@ export default {
   props: {
     /**
      * VueSandbox-formatted component.
-     * This object contains a compiled Vue component and some related meta informations.
+     * This object contains a compiled Vue component and some related
+     * meta informations.
      *
      * Its format must follow the rules below:
      * @property component {object} [required] - Vue-compiled component.
@@ -123,7 +124,7 @@ export default {
   watch: {
     component: {
       handler () {
-        this.localFieldsProps = this.getFieldsFormattedProps()
+        this.localFieldsProps = this.fieldsFormattedProps
       },
       deep: true,
     }
@@ -172,10 +173,7 @@ export default {
       const componentInstance = new Vue(Object.assign(instanceConfig, this.vsComponent.component))
       return componentInstance.$mount().$el.outerHTML
     },
-  },
-
-  methods: {
-    getFieldsFormattedProps () {
+    fieldsFormattedProps () {
       let fmtProps = []
       if (this.vsComponent.component.props) {
         for (const [key, value] of Object.entries(this.vsComponent.component.props)) {
@@ -190,6 +188,9 @@ export default {
       }
       return fmtProps
     },
+  },
+
+  methods: {
     getDefaultPropValue (type) {
       switch (formatFromNativeType(type)) {
         case 'text':
@@ -218,7 +219,7 @@ export default {
   },
 
   created () {
-    this.localFieldsProps = this.getFieldsFormattedProps()
+    this.localFieldsProps = this.fieldsFormattedProps
   },
 }
 </script>
