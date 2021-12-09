@@ -9,11 +9,6 @@ const CSSMinimizerPlugin = require('css-minimizer-webpack-plugin')
 module.exports = {
   mode: 'production',
   entry: './src/main.js',
-  resolve: {
-    alias: {
-      '@': path.resolve(__dirname, 'src/'),
-    }
-  },
   output: {
     library: {
       name: 'VSWrapper',
@@ -91,6 +86,11 @@ module.exports = {
         ]
       }
     ]
+  },
+  resolve: {
+    alias: {
+      '@': path.resolve(__dirname, 'src/'),
+    }
   },
   optimization: {
     minimizer: [
