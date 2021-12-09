@@ -255,7 +255,7 @@ export default {
                 }
               }
             } else if (parentType === '$array') {
-              // Nothing to do with the new "array-in-array" field...
+              // No state to update with "array-in-array" field...
             }
           }
           // - Deleting

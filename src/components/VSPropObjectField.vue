@@ -177,8 +177,8 @@
           </div>
           <!-- VSPropArrayField -->
           <component
-            v-if="objFieldComp"
-            :is="objFieldComp"
+            v-if="arrFieldComp"
+            :is="arrFieldComp"
             v-model="field.value"
             v-show="field.open"
             :depth="depth + 1"
@@ -191,7 +191,7 @@
         <!-- Prop: Primitive -->
         <template v-else>
           <div class="vsc-prop-primitive" :class="{ idle: !field._editing, updating: field._editing, }">
-            <template v-if="!field._editing">
+            <template v-if="field._initialized && !field._editing">
               <div class="vsc-prop-name">
                 <div class="vsc-prop-kv-wrapper vsc-prop-name-wrapper">
                   <div class="vsc-prop-name-label">{{ field.name }}</div>
@@ -318,6 +318,15 @@
 import { isValidPropName, isValidCodePrimitiveValue, } from '@/helpers/Validator.js'
 import VSPrimitiveValue from '@/components/VSPrimitiveValue.vue'
 
+/**
+ * VSPropObjectField
+ *
+ * Component dedicated to object-based props management, by providing
+ * a multidimensional form to update Object props in any way.
+ * This component uses the "recursive component" system to allow
+ * unlimited depth levels.
+ */
+
 export default {
   name: 'VSPropObjectField',
   components: {
@@ -325,14 +334,30 @@ export default {
   },
 
   props: {
+    /**
+     * Value used for the current level's v-model behavior.
+     *
+     * @type {array}
+     */
     value: {
       type: Array,
       required: true,
     },
+    /**
+     * Recursion depth level.
+     * Incremented by 1 at each new deeper recursion.
+     *
+     * @type {number}
+     */
     depth: {
       type: Number,
       default: 0,
     },
+    /**
+     * VS-formatted type of the current field's parent.
+     *
+     * @type {string}
+     */
     parentType: {
       type: String,
       default: null,
@@ -340,17 +365,65 @@ export default {
   },
 
   data: () => ({
-    objFieldComp: null,
+    /**
+     * `VSArrayPropField` component definition filled when needed
+     * for nested array-based fields.
+     * This dynamic import is required to avoid circular loop between
+     * crossed Object/Array static imports.
+     *
+     * @type {VComponent}
+     */
+    arrFieldComp: null,
+    /**
+     * Clone of `value` prop, used for v-model updates.
+     *
+     * @type {mixed}
+     */
     modelValue: [],
+    /**
+     * Bound HTML input used while editing field's name.
+     *
+     * @type {HTMLElement}
+     */
     $inputKeyName: null,
+    /**
+     * Bound HTML input used while editing field's value.
+     *
+     * @type {HTMLElement}
+     */
     $inputKeyValue: null,
+    /**
+     * Bound HTML element of the virtual "name input"'s hidden block.
+     *
+     * @type {HTMLElement}
+     */
     $vInputKeyName: null,
+    /**
+     * Bound HTML element of the virtual "value input"'s hidden block.
+     *
+     * @type {HTMLElement}
+     */
     $vInputKeyValue: null,
+    /**
+     * Computed width of the virtual `$vInputKeyName` element.
+     *
+     * @type {HTMLElement}
+     */
     vKeyNameInputWidth: 0,
+    /**
+     * Computed width of the virtual `$vInputKeyValue` element.
+     *
+     * @type {HTMLElement}
+     */
     vKeyValueInputWidth: 0,
   }),
 
   computed: {
+    /**
+     * Component's conditional root element's classes.
+     *
+     * @return  {object}
+     */
     containerClasses () {
       return {
         open: this.open,
@@ -358,17 +431,32 @@ export default {
         'parent-object': this.parentType === '$object',
       }
     },
+    /**
+     * Computed styles of field's "name input" element.
+     *
+     * @return  {object}
+     */
     keyNameInputStyles () {
       return {
         width: `${this.vKeyNameInputWidth}px`,
       }
     },
+    /**
+     * Computed styles of field's "value input" element.
+     *
+     * @return  {object}
+     */
     keyValueInputStyles () {
       return {
         width: `${this.vKeyValueInputWidth}px`,
       }
     },
-    hasNestedObjectFields () {
+    /**
+     * State property for nested arrays.
+     *
+     * @return  {boolean}
+     */
+    hasNestedArrayFields () {
       return !!this.modelValue.filter(field => field.type === '$array').length
     },
   },
@@ -384,23 +472,42 @@ export default {
       },
       deep: true,
     },
-    hasNestedObjectFields (value) {
+    hasNestedArrayFields (value) {
       if (value) {
-        this.objFieldComp = require('@/components/VSPropArrayField.vue').default
+        this.arrFieldComp = require('@/components/VSPropArrayField.vue').default
       }
     },
   },
 
   methods: {
+    /**
+     * Set internal bound & virtual inputs if present in the DOM.
+     * Must be called in a `$nextTick` callback to ensure that
+     * input elements are rendered.
+     *
+     * @return  {void}
+     */
     autosetInputsElements () {
       this.$inputKeyName = this.$refs.inputKeyName && this.$refs.inputKeyName.length ? this.$refs.inputKeyName[0].$el : null
       this.$inputKeyValue = this.$refs.inputKeyValue && this.$refs.inputKeyValue.length ? this.$refs.inputKeyValue[0].$el : null
       this.$vInputKeyName = this.$refs.vInputKeyName && this.$refs.vInputKeyName.length ? this.$refs.vInputKeyName[0] : null
       this.$vInputKeyValue = this.$refs.vInputKeyValue && this.$refs.vInputKeyValue.length ? this.$refs.vInputKeyValue[0] : null
     },
+    /**
+     * Wrapper method for all DOM-related updates.
+     *
+     * @return  {void}
+     */
     handleLocalFieldUpdate (localValue) {
       this.handleDOMUpdates()
     },
+    /**
+     * Compute editing inputs' widths from their respective
+     * virtual inputs blocks and set values in corresponding `data`
+     * fields.
+     *
+     * @return  {void}
+     */
     handleDOMUpdates () {
       if (this.$inputKeyName && this.$vInputKeyName) {
         this.vKeyNameInputWidth = this.$inputKeyName.value ? this.$vInputKeyName.offsetWidth : 40
@@ -409,6 +516,46 @@ export default {
         this.vKeyValueInputWidth = this.$inputKeyValue.value ? this.$vInputKeyValue.offsetWidth : 40
       }
     },
+    /**
+     * Reset fields' states for the current `modelValue` (including all
+     * lower-level nested fields).
+     * Also emits a "reset-fields" event to trigger upper-level updates.
+     *
+     * @param {array} nestedValue - Nested fields list used for recursion.
+     *
+     * @return {void}
+     */
+    resetPropFieldsStates (nestedValue) {
+      let value = nestedValue ? nestedValue : this.modelValue
+      for (let [i, field] of value.entries()) {
+        field._editing = false
+        if (field.type === '$object') {
+          this.resetPropFieldsStates(field.value)
+        } else if (field.type === '$array') {
+
+        } else {
+          if (!field._initialized && (!isValidPropName(field.name) || !isValidCodePrimitiveValue(field.userValue))) {
+            value.splice(i, 1)
+          } else {
+            field._initialized = true
+          }
+        }
+      }
+      this.$emit('reset-fields')
+    },
+
+    /**
+     * Event Handlers
+     *
+     * Used to handle behaviors from user actions.
+     * ---
+     * Note: All event handlers can ONLY update field's internal state
+     * (not values), which will trigger a top-level `computeLocalFields`
+     * call dedicated to all internal values' updates. This is required
+     * to ensure fields' udpates at the largest scope and at all nesting
+     * levels.
+     */
+
     onEditPropClick (field) {
       this.resetPropFieldsStates()
       this.$emit('edit-field', field)
@@ -511,24 +658,6 @@ export default {
       if (!field._error) {
         field._converting = '$array'
       }
-    },
-    resetPropFieldsStates (nestedValue) {
-      let value = nestedValue ? nestedValue : this.modelValue
-      for (let [i, field] of value.entries()) {
-        field._editing = false
-        if (field.type === '$object') {
-          this.resetPropFieldsStates(field.value)
-        } else if (field.type === '$array') {
-
-        } else {
-          if (!field._initialized && (!isValidPropName(field.name) || !isValidCodePrimitiveValue(field.userValue))) {
-            value.splice(i, 1)
-          } else {
-            field._initialized = true
-          }
-        }
-      }
-      this.$emit('reset-fields')
     },
   },
 
