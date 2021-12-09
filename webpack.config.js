@@ -15,11 +15,13 @@ module.exports = {
     }
   },
   output: {
-    library: 'vue-sandbox-wrapper',
-    libraryTarget: 'umd',
+    library: {
+      name: 'VSWrapper',
+      type: 'umd',
+      export: 'default',
+    },
     libraryExport: 'default',
     path: path.resolve(__dirname, './dist/'),
-    publicPath: '/',
     filename: 'vue-sandbox-wrapper.js',
   },
   module: {

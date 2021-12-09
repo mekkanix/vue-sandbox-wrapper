@@ -1,3 +1,3 @@
 import VSComponentWrapper from './components/VSComponentWrapper.vue'
 
-export { VSComponentWrapper, }
+export default { VSComponentWrapper, }
