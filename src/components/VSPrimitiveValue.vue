@@ -5,7 +5,7 @@
 </template>
 
 <script>
-import { formatPrimitiveValueToCode, } from '@app/helpers/Formatter.js'
+import { formatPrimitiveValueToCode, } from '@/helpers/Formatter.js'
 
 export default {
   name: 'VSPrimitiveValue',

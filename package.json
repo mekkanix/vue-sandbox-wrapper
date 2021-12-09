@@ -3,6 +3,9 @@
   "version": "1.0.0-beta.1",
   "description": "Standalone VueSandbox wrapper for live-testing Vue components.",
   "main": "./dist/vue-sandbox-wrapper.js",
+  "scripts": {
+    "build": "webpack build"
+  },
   "repository": "git@github.com:mekkanix/vue-sandbox-wrapper.git",
   "author": "polo <paulguzdariviere@gmail.com>",
   "license": "MIT",

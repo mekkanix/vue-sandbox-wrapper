@@ -72,15 +72,15 @@
 <script>
 import Vue from 'vue'
 import { DateTime } from 'luxon'
-import { formatFromNativeType, formatFromNativeToNativeStrType, } from '@app/helpers/Formatter.js'
-import { isOfPrimitiveType, } from '@app/helpers/Type.js'
-import VSComplexProp from '@lib/components/VSComplexProp.vue'
-import VSPropObjectField from '@lib/components/VSPropObjectField.vue'
-import VSPropArrayField from '@lib/components/VSPropArrayField.vue'
+import { formatFromNativeType, formatFromNativeToNativeStrType, } from '@/helpers/Formatter.js'
+import { isOfPrimitiveType, } from '@/helpers/Type.js'
+import VSComplexProp from '@/components/VSComplexProp.vue'
+import VSPropObjectField from '@/components/VSPropObjectField.vue'
+import VSPropArrayField from '@/components/VSPropArrayField.vue'
 
 /**
  * VSComponentWrapper
- * 
+ *
  * Root component for single-component live-testing.
  * It contains a component rendering area alongside a management panel
  * allowing live props' update through dedicated inputs.
@@ -98,7 +98,7 @@ export default {
     /**
      * VueSandbox-formatted component.
      * This object contains a compiled Vue component and some related meta informations.
-     * 
+     *
      * Its format must follow the rules below:
      * @property component {object} [required] - Vue-compiled component.
      * @property filepath {object} [optional] - Component relative file path.
@@ -114,7 +114,7 @@ export default {
     /**
      * List of parsed component's props.
      * Used to generate live-testing form.
-     * 
+     *
      * @type {array}
      */
     localFieldsProps: [],
@@ -133,7 +133,7 @@ export default {
     /**
      * Reducer property used to get component-compliant formatted props
      * (e.g. `propsData`) from `localFieldsProps`.
-     * 
+     *
      * @type {object}
      */
     instanceFormattedProps () {
@@ -144,7 +144,7 @@ export default {
     },
     /**
      * List of component general informations retrieved from component.
-     * 
+     *
      * @type {array}
      */
     componentMetaInfos () {
@@ -161,7 +161,7 @@ export default {
      * Component computed rendering (HTML).
      * Instance-formatted props are injected to the component (from `localFieldsProps`)
      * before rendering.
-     * 
+     *
      * @type {string<HTML>}
      */
     componentHTMLOutput () {

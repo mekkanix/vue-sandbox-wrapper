@@ -205,8 +205,8 @@
 </template>
 
 <script>
-import { isValidPropName, isValidCodePrimitiveValue, } from '@app/helpers/Validator.js'
-import VSPrimitiveValue from '@lib/components/VSPrimitiveValue.vue'
+import { isValidPropName, isValidCodePrimitiveValue, } from '@/helpers/Validator.js'
+import VSPrimitiveValue from '@/components/VSPrimitiveValue.vue'
 
 export default {
   name: 'VSPropArrayField',
@@ -273,7 +273,7 @@ export default {
     },
     hasNestedObjectFields (value) {
       if (value) {
-        this.objFieldComp = require('@lib/components/VSPropObjectField.vue').default
+        this.objFieldComp = require('@/components/VSPropObjectField.vue').default
       }
     },
   },

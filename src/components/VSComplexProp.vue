@@ -22,10 +22,10 @@ import {
   formatPrimitiveValueToCode,
   convertPropObjectToFields,
   convertPropArrayToFields,
-} from '@app/helpers/Formatter.js'
-import { isValidPropName, isValidCodePrimitiveValue, } from '@app/helpers/Validator.js'
-import VSPropObjectField from '@lib/components/VSPropObjectField.vue'
-import VSPropArrayField from '@lib/components/VSPropArrayField.vue'
+} from '@/helpers/Formatter.js'
+import { isValidPropName, isValidCodePrimitiveValue, } from '@/helpers/Validator.js'
+import VSPropObjectField from '@/components/VSPropObjectField.vue'
+import VSPropArrayField from '@/components/VSPropArrayField.vue'
 
 export default {
   name: 'VSComplexProp',

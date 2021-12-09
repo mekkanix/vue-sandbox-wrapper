@@ -8,29 +8,22 @@ const CSSMinimizerPlugin = require('css-minimizer-webpack-plugin')
 
 module.exports = {
   mode: 'production',
-  entry: {
-    app: './src/app/main.js',
-    lib: './src/lib/main.js',
-  },
+  entry: './src/main.js',
   resolve: {
     alias: {
       '@': path.resolve(__dirname, 'src/'),
-      '@app': path.resolve(__dirname, 'src/app/'),
-      '@lib': path.resolve(__dirname, 'src/lib/'),
-      '@public': path.resolve(__dirname, 'public/'),
     }
   },
   output: {
-    library: 'VStool',
+    library: 'vue-sandbox-wrapper',
     libraryTarget: 'umd',
     libraryExport: 'default',
     path: path.resolve(__dirname, './dist/'),
     publicPath: '/',
-    filename: 'vue-sandbox.[name].js',
+    filename: 'vue-sandbox-wrapper.js',
   },
   module: {
     rules: [
-      // Pkg-related rules (internal)
       {
         test: /\.js$/i,
         use: [
@@ -38,7 +31,6 @@ module.exports = {
             loader: 'babel-loader',
             options: {
               presets: ['@babel/preset-env'],
-              plugins: ['@babel/plugin-proposal-class-properties'],
             }
           },
         ]
@@ -107,7 +99,7 @@ module.exports = {
   plugins: [
     new VueLoaderPlugin(),
     new MiniCssExtractPlugin({
-      filename: 'vue-sandbox.[name].css',
+      filename: 'vue-sandbox-wrapper.css',
     }),
     new RemoveEmptyScriptsPlugin(),
     autoprefixer,
