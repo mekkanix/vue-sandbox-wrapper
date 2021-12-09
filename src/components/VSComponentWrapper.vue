@@ -71,7 +71,6 @@
 
 <script>
 import Vue from 'vue'
-import { DateTime } from 'luxon'
 import { formatFromNativeType, formatFromNativeToNativeStrType, } from '@/helpers/Formatter.js'
 import { isOfPrimitiveType, } from '@/helpers/Type.js'
 import VSComplexProp from '@/components/VSComplexProp.vue'
@@ -81,8 +80,8 @@ import VSPropArrayField from '@/components/VSPropArrayField.vue'
 /**
  * VSComponentWrapper
  *
- * Root component for single-component live-testing.
- * It contains a component rendering area alongside a management panel
+ * Main component for single-component live-testing containing
+ * a component rendering area alongside a management panel
  * allowing live props' update through dedicated inputs.
  */
 
@@ -160,8 +159,8 @@ export default {
     },
     /**
      * Component computed rendering (HTML).
-     * Instance-formatted props are injected to the component (from `localFieldsProps`)
-     * before rendering.
+     * Instance-formatted props are injected to the component
+     * (from `localFieldsProps`) before rendering.
      *
      * @type {string<HTML>}
      */
@@ -212,7 +211,7 @@ export default {
         case 'number':
           return 0
         case 'date':
-          return DateTime.now().toString()
+          return new Date()
         case '$object':
           return {}
         case '$array':

@@ -27,6 +27,17 @@ import { isValidPropName, isValidCodePrimitiveValue, } from '@/helpers/Validator
 import VSPropObjectField from '@/components/VSPropObjectField.vue'
 import VSPropArrayField from '@/components/VSPropArrayField.vue'
 
+/**
+ * VSComplexProp
+ *
+ * Wrapper component used to centralize management of
+ * Object- or Array-based props:
+ *   - Auto-detection of provided complex prop type (Object/Array)
+ *   - VueSandbox-compliant formatting of provided prop
+ *   - Centralized management for prop's updates (additions, deletions,
+ *     updates)
+ */
+
 export default {
   name: 'VSComplexProp',
   components: {
@@ -35,6 +46,11 @@ export default {
   },
 
   props: {
+    /**
+     * Component prop's raw value, used as v-model.
+     *
+     * @type {mixed}
+     */
     value: {
       type: [Object, Array,],
       required: true,
@@ -42,8 +58,25 @@ export default {
   },
 
   data: () => ({
+    /**
+     * Component prop's type.
+     *
+     * @type {string}
+     */
     type: null,
+    /**
+     * Clone of `value` prop, used for v-model updates.
+     *
+     * @type {mixed}
+     */
     modelValue: null,
+    /**
+     * VS-formatted fields, generated from raw `value` prop.
+     * Also used in nested type-specific components
+     * (`VSObjectPropField` and `VSArrayPropField`).
+     *
+     * @type {array}
+     */
     localValue: null,
   }),
 
@@ -51,7 +84,6 @@ export default {
     value: {
       handler (value) {
         this.type = this.getFormattedType(value)
-        // this.modelValue = value
       },
       deep: true,
     },
@@ -64,7 +96,7 @@ export default {
     localValue: {
       handler (value) {
         let updatedValue = this.computeLocalFields(value)
-        // Sorting localValue here causes an infinite loop of this watcher,
+        // Sorting `localValue` here causes an infinite loop of this watcher,
         // because sorting it changes its internal state and re-call the watcher.
         // TODO:  Maybe use a separate "sort button" feature to avoid this problem.
         this.modelValue = this.formatLocalToModelValue(updatedValue)
@@ -74,6 +106,14 @@ export default {
   },
 
   methods: {
+    /**
+     * Formats provided raw value into its VS-specific
+     * fields equivalent.
+     *
+     * @param {mixed} initValue - The original raw value.
+     *
+     * @return {mixed}
+     */
     formatToLocalValue (initValue) {
       if (typeof initValue === 'object' && !Array.isArray(initValue)) { // Object
         let formattedValue = convertPropObjectToFields(initValue)
@@ -86,6 +126,18 @@ export default {
         return formattedValue
       }
     },
+    /**
+     * Formats provided VS-formatted `value` by adding
+     * some state & control informations to all of its fields.
+     *
+     * TODO:  As this operation is almost the same as the
+     * `convertPropObjectToFields` / `convertPropArrayToFields` helpers,
+     * find a way to merge formatting in the same function.
+     *
+     * @param {array} value - The VueSandbox-formatted value.
+     *
+     * @return {array}
+     */
     formatToLocalValueFields (value) {
       const fields = []
       for (let field of value) {
@@ -113,10 +165,21 @@ export default {
       }
       return fields
     },
-    formatLocalToModelValue (value, type) {
-      let localType = type ? type : this.type
+    /**
+     * Formats provided VS-formatted value into its raw value
+     * equivalent.
+     * Especially used to update local v-model for parent component.
+     *
+     * @param {array} value - The VS-formatted value to format.
+     * @param {string} type - Parent field's type of the currently
+     * processed field. Used for recursion processing.
+     *
+     * @return {mixed}
+     */
+    formatLocalToModelValue (value, type = null) {
+      let localParentType = type ? type : this.type
       let propValue = null
-      if (localType === '$object') {
+      if (localParentType === '$object') {
         propValue = {}
         for (const field of value) {
           if (field._initialized) {
@@ -144,6 +207,19 @@ export default {
       }
       return propValue
     },
+    /**
+     * Main fields' computing method.
+     * This method is called each time a change occurs in `localValue`
+     * (including all nested values), and perform internal fields'
+     * updates depending on their related state
+     * (field additions, deletions, etc.).
+     *
+     * @param {array} localFields - Current processed fields list.
+     * @param {string} parentPropType - Parent field's type of the
+     * currently processed field. Used for recursion processing.
+     *
+     * @return {array}
+     */
     computeLocalFields (localFields, parentPropType = null) {
       const parentType = parentPropType ?? this.type
       const strNullValue = 'null'
@@ -349,21 +425,47 @@ export default {
       }
       return localFields
     },
+    /**
+     * Sorting method for VS-formatted `fields`.
+     * The sort is made by `field.name`'s alphabetical order.
+     *
+     * @param {array} fields - The fields' list to sort.
+     *
+     * @return {array}
+     */
     sortLocalFields (fields) {
       let sortedFields = sortBy(fields, [field => field.name])
       for (let field of sortedFields) {
         if (field.type === '$object') {
           field.value = this.sortLocalFields(field.value)
         } else if (field.type === '$array') {
-
+          // Nothing to sort with `array` fields...
         }
       }
       return sortedFields
     },
+    /**
+     * Checks for `propName` unicity (checks performed against
+     * `field.name` in `localFields`).
+     *
+     * @param   {[type]}  propName     [propName description]
+     * @param   {[type]}  localFields  [localFields description]
+     *
+     * @return  {[type]}               [return description]
+     */
     isUniqueFieldPropName (propName, localFields) {
       const matches = localFields.filter(field => propName === field.name)
       return !(matches.length > 1)
     },
+  /**
+   * Wrapper around the `formatFromNativeStrType` that fixes
+   * the special case of "Array-type checking" which initially
+   * returns 'object'.
+   *
+   * @param {mixed} value - Value to get type of.
+   *
+   * @return {mixed}
+   */
     getFormattedType (value) {
       if (Array.isArray(value)) {
         return '$array'
@@ -373,9 +475,25 @@ export default {
         return formatFromNativeStrType(typeof value)
       }
     },
+    /**
+     * Parse the given user-entered "code" value to its real primitive
+     * equivalent.
+     *
+     * @param {string} value - The user-entered "code" value.
+     *
+     * @return {mixed}
+     */
     parseUserCodeValue (value) {
       return value === '""' ? "" : JSON.parse(value)
     },
+    /**
+     * Loops through all VS-formatted fields (including nested ones)
+     * to reset them to their "idle" state.
+     *
+     * @param {array} nestedValue - Low-level fields. Used for recursion processing.
+     *
+     * @return {void}
+     */
     resetPropFieldsStates (nestedValue) {
       let value = nestedValue ? nestedValue : this.localValue
       for (let field of value) {
