@@ -80,6 +80,7 @@
 
 import Vue from 'vue'
 import { DateTime } from 'luxon'
+import { BFormInput } from 'bootstrap-vue'
 import {
   formatFromNativeType,
   formatFromNativeStrType,
@@ -93,6 +94,7 @@ import VSPropArrayField from '@/components/VSPropArrayField.vue'
 export default {
   name: 'VSComponentWrapper',
   components: {
+    BFormInput,
     VSComplexProp,
     VSPropObjectField,
     VSPropArrayField,

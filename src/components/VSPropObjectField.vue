@@ -324,12 +324,14 @@
  * unlimited depth levels.
  */
 
+import { BIconPlusCircle } from 'bootstrap-vue'
 import { isValidPropName, isValidCodePrimitiveValue, } from '@/helpers/Validator.js'
 import VSPrimitiveValue from '@/components/VSPrimitiveValue.vue'
 
 export default {
   name: 'VSPropObjectField',
   components: {
+    BIconPlusCircle,
     VSPrimitiveValue,
   },
 
