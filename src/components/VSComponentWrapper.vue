@@ -79,7 +79,7 @@
  */
 
 import Vue from 'vue'
-import { DateTime }from 'luxon'
+import { DateTime } from 'luxon'
 import {
   formatFromNativeType,
   formatFromNativeStrType,
@@ -190,7 +190,7 @@ export default {
             type: formatFromNativeType(fieldNativeType),
             nativeType: fieldNativeStrType,
             value: fieldValue,
-            formattedValue: this.formatPromValue(value, formatFromNativeStrType(fieldNativeStrType)),
+            formattedValue: this.formatPromValue(fieldValue, formatFromNativeStrType(fieldNativeStrType)),
           })
         }
       }
