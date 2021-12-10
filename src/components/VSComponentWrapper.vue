@@ -46,7 +46,7 @@
               <b-form-input
                 v-else
                 :type="prop.type"
-                v-model="prop.value"
+                v-model="prop.formattedValue"
                 size="sm"
                 class="form-control"
               />
@@ -79,7 +79,12 @@
  */
 
 import Vue from 'vue'
-import { formatFromNativeType, formatFromNativeToNativeStrType, } from '@/helpers/Formatter.js'
+import { DateTime }from 'luxon'
+import {
+  formatFromNativeType,
+  formatFromNativeStrType,
+  formatFromNativeToNativeStrType,
+} from '@/helpers/Formatter.js'
 import { isOfPrimitiveType, } from '@/helpers/Type.js'
 import VSComplexProp from '@/components/VSComplexProp.vue'
 import VSPropObjectField from '@/components/VSPropObjectField.vue'
@@ -103,10 +108,10 @@ export default {
      * @property component {object} [required] - Vue-compiled component.
      * @property filepath {object} [optional] - Component relative file path.
      */
-    vsComponent: {
+    component: {
       type: Object,
       required: true,
-      validator: vsComp => (vsComp.component && typeof vsComp.component === 'object'),
+      validator: component => typeof component === 'object',
     },
   },
 
@@ -143,18 +148,14 @@ export default {
       }), {})
     },
     /**
-     * List of component general informations retrieved from component.
+     * General informations retrieved from component.
      *
      * @type {array}
      */
     componentMetaInfos () {
-      const c = this.vsComponent
       let infos = [
-        { label: 'Component name', value: c.component.name || '-', },
+        { label: 'Component name', value: this.component.name || '-', },
       ]
-      if (c.filepath) {
-        infos.push({ label: 'Relative filepath', value: c.filepath, })
-      }
       return infos
     },
     /**
@@ -169,7 +170,7 @@ export default {
       if (this.localFieldsProps.length) {
         instanceConfig.propsData = this.instanceFormattedProps
       }
-      const componentInstance = new Vue(Object.assign(instanceConfig, this.vsComponent.component))
+      const componentInstance = new Vue(Object.assign(instanceConfig, this.component))
       return componentInstance.$mount().$el.outerHTML
     },
     /**
@@ -179,14 +180,17 @@ export default {
      */
     fieldsFormattedProps () {
       let fmtProps = []
-      if (this.vsComponent.component.props) {
-        for (const [key, value] of Object.entries(this.vsComponent.component.props)) {
+      if (this.component.props) {
+        for (const [key, value] of Object.entries(this.component.props)) {
           const fieldNativeType = value.type || value
+          const fieldValue = this.parsePropValue(value)
+          const fieldNativeStrType = formatFromNativeToNativeStrType(fieldNativeType)
           fmtProps.push({
             name: key,
             type: formatFromNativeType(fieldNativeType),
-            nativeType: formatFromNativeToNativeStrType(fieldNativeType),
-            value: this.parsePropValue(value),
+            nativeType: fieldNativeStrType,
+            value: fieldValue,
+            formattedValue: this.formatPromValue(value, formatFromNativeStrType(fieldNativeStrType)),
           })
         }
       }
@@ -206,6 +210,8 @@ export default {
      */
     getDefaultPropValue (type) {
       switch (formatFromNativeType(type)) {
+        case 'boolean':
+          return true
         case 'text':
           return ''
         case 'number':
@@ -232,13 +238,28 @@ export default {
      */
     parsePropValue (propDef) {
       if (isOfPrimitiveType(propDef)) {
-        return this.getDefaultPropDef(propDef)
+        return this.getDefaultPropValue(propDef)
       } else {
         if (propDef.default) {
           return typeof propDef.default === 'function' ? propDef.default() : propDef.default
         } else if (propDef.type) {
           return this.getDefaultPropValue(propDef.type)
         }
+      }
+    },
+
+    formatPromValue (value, type) {
+      switch (type) {
+        case 'string':
+          return ''
+        case 'number':
+        case 'boolean':
+          return value.toString()
+        case 'date':
+          return DateTime.fromJSDate(value).toISO()
+        case '$object':
+        case '$array':
+          return value
       }
     },
   },
