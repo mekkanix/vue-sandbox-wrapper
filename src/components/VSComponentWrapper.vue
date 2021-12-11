@@ -46,7 +46,7 @@
               <b-form-input
                 v-else
                 :type="prop.type"
-                v-model="prop.formattedValue"
+                v-model="prop.userValue"
                 size="sm"
                 class="form-control"
               />
@@ -63,7 +63,7 @@
 
     <div class="vs-component-viewport-container">
       <div class="vs-component-viewport">
-        <div class="vs-component-viewport-render" v-html="componentHTMLOutput" />
+        <div class="vs-component-viewport-render" v-html="renderedHTML" />
       </div>
     </div>
   </div>
@@ -85,6 +85,7 @@ import {
   formatFromNativeType,
   formatFromNativeStrType,
   formatFromNativeToNativeStrType,
+  parsePrimitiveValue,
 } from '@/helpers/Formatter.js'
 import { isOfPrimitiveType, } from '@/helpers/Type.js'
 import VSComplexProp from '@/components/VSComplexProp.vue'
@@ -128,12 +129,19 @@ export default {
   }),
 
   watch: {
-    component: {
-      handler () {
-        this.localFieldsProps = this.fieldsFormattedProps
+    // component: {
+    //   handler () {
+    //     this.setFieldsFormattedPropsFromComponent()
+    //     // this.localFieldsProps = this.setFieldsFormattedPropsFromComponent()
+    //   },
+    //   deep: true,
+    // },
+    localFieldsProps: {
+      handler (fields) {
+        this.updateFieldsRawValues(fields)
       },
       deep: true,
-    }
+    },
   },
 
   computed: {
@@ -150,6 +158,21 @@ export default {
       }), {})
     },
     /**
+     * Component computed render (HTML).
+     * Instance-formatted props are injected to the component
+     * (from `localFieldsProps`) before rendering.
+     *
+     * @type {string<HTML>}
+     */
+    renderedHTML () {
+      let instanceConfig = {}
+      if (this.localFieldsProps.length) {
+        instanceConfig.propsData = this.instanceFormattedProps
+      }
+      const componentInstance = new Vue(Object.assign(instanceConfig, this.component))
+      return componentInstance.$mount().$el.outerHTML
+    },
+    /**
      * General informations retrieved from component.
      *
      * @type {array}
@@ -160,47 +183,43 @@ export default {
       ]
       return infos
     },
-    /**
-     * Component computed rendering (HTML).
-     * Instance-formatted props are injected to the component
-     * (from `localFieldsProps`) before rendering.
-     *
-     * @type {string<HTML>}
-     */
-    componentHTMLOutput () {
-      let instanceConfig = {}
-      if (this.localFieldsProps.length) {
-        instanceConfig.propsData = this.instanceFormattedProps
-      }
-      const componentInstance = new Vue(Object.assign(instanceConfig, this.component))
-      return componentInstance.$mount().$el.outerHTML
-    },
+  },
+
+  methods: {
     /**
      * VueSandbox-formatted fields generated from component's props.
      *
      * @return  {array}
      */
-    fieldsFormattedProps () {
-      let fmtProps = []
+    getFieldsFormattedPropsFromComponent () {
+      let formattedProps = []
       if (this.component.props) {
         for (const [key, value] of Object.entries(this.component.props)) {
           const fieldNativeType = value.type || value
           const fieldValue = this.parsePropValue(value)
           const fieldNativeStrType = formatFromNativeToNativeStrType(fieldNativeType)
-          fmtProps.push({
+          const prop = {
             name: key,
             type: formatFromNativeType(fieldNativeType),
             nativeType: fieldNativeStrType,
             value: fieldValue,
-            formattedValue: this.formatPromValue(fieldValue, formatFromNativeStrType(fieldNativeStrType)),
-          })
+          }
+          if (!['$object', '$array',].includes(prop.type)) {
+            prop.userValue = this.formatPropUserValue(fieldValue, formatFromNativeStrType(fieldNativeStrType))
+          }
+          formattedProps.push(prop)
         }
       }
-      return fmtProps
+      return formattedProps
     },
-  },
-
-  methods: {
+    updateFieldsRawValues (fields) {
+      return fields.map(field => {
+        if (field.userValue) {
+          field.value = parsePrimitiveValue(field.userValue, field.nativeType)
+        }
+        return field
+      })
+    },
     /**
      * Returns a default prop value depending on the provided
      * VueSandbox-formatted type (see `src/constants/Types.js`
@@ -249,8 +268,15 @@ export default {
         }
       }
     },
-
-    formatPromValue (value, type) {
+    /**
+     * -
+     *
+     * @param   {[type]}  value  [value description]
+     * @param   {[type]}  type   [type description]
+     *
+     * @return  {[type]}         [return description]
+     */
+    formatPropUserValue (value, type) {
       switch (type) {
         case 'string':
           return ''
@@ -267,7 +293,7 @@ export default {
   },
 
   created () {
-    this.localFieldsProps = this.fieldsFormattedProps
+    this.localFieldsProps = this.getFieldsFormattedPropsFromComponent()
   },
 }
 </script>
