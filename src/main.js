@@ -4,6 +4,10 @@
  * Released under the MIT License.
  */
 
-import VSComponentWrapper from './components/VSComponentWrapper.vue'
+import plugin from './plugin.js'
+import VSComponentWrapper from '@/components/VSComponentWrapper.vue'
 
-export default { VSComponentWrapper, }
+export default {
+  VSWrapperPlugin: plugin,
+  VSComponentWrapper,
+}

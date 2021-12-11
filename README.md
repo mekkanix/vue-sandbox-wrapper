@@ -2,7 +2,7 @@
 
 This package is a standalone port of [VueSandbox](git@github.com:mekkanix/vue-sandbox-wrapper.git)'s live-testing system.
 
-It is designed to be integrated in an existing codebase, and provides an "out-of-the-box" working component for live-testing Vue components in your application.
+It is designed to be integrated in an existing codebase, and provides an "out-of-the-box" working Vue component for live-testing Vue components in your application.
 
 *If you're looking for the complete VueSandbox utility, you can find it [here](https://github.com/mekkanix/vue-sandbox).*
 
@@ -40,12 +40,11 @@ yarn add vue-sandbox-wrapper
 
 ### Usage
 
-This package uses the UMD format, so you can either import it through your module bundler (only tested with webpack yet) or include it directly through a `<script>` tag.
+This package is currently bundled as a [UMD](https://github.com/umdjs/umd) module, so it can be used in several ways.
 
 #### Module Builder
 
-The main component you'll need to import is nested in the default export.  
-You'll also need to import the associated CSS file.
+This is the preferred way to use 
 
 ```js
 import { VSComponentWrapper } from 'vue-sandbox-wrapper'
