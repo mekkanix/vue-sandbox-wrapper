@@ -129,13 +129,12 @@ export default {
   }),
 
   watch: {
-    // component: {
-    //   handler () {
-    //     this.setFieldsFormattedPropsFromComponent()
-    //     // this.localFieldsProps = this.setFieldsFormattedPropsFromComponent()
-    //   },
-    //   deep: true,
-    // },
+    component: {
+      handler () {
+        this.localFieldsProps = this.getFieldsFormattedPropsFromComponent()
+      },
+      deep: true,
+    },
     localFieldsProps: {
       handler (fields) {
         this.updateFieldsRawValues(fields)
@@ -212,6 +211,15 @@ export default {
       }
       return formattedProps
     },
+    /**
+     * Used to update fields' raw `value`s from stringified `userValue`s.
+     * Must be used for directly-entered values (through HTML input)
+     * to update field's internal raw value.
+     *
+     * @param {array} fields - Local props' fields.
+     *
+     * @return {array}
+     */
     updateFieldsRawValues (fields) {
       return fields.map(field => {
         if (field.userValue) {
@@ -251,7 +259,7 @@ export default {
      * prop definition way
      * (details: https://vuejs.org/v2/guide/components-props.html).
      *
-     * TODO:  Parse all definition cases (some are missing).
+     * TODO:  Handle all definition methods (some are missing).
      *
      * @param {mixed} propDef - The component's prop definition.
      *
@@ -269,22 +277,23 @@ export default {
       }
     },
     /**
-     * -
+     * Method used to stringify the provided field's raw `value`.
+     * This is especially useful for directly-bound values
+     * into HTML inputs.
      *
-     * @param   {[type]}  value  [value description]
-     * @param   {[type]}  type   [type description]
+     * @param {mixed} value - The field's raw value.
+     * @param {string} type - The field's VS-formatted type.
      *
-     * @return  {[type]}         [return description]
+     * @return {string}
      */
     formatPropUserValue (value, type) {
       switch (type) {
-        case 'string':
-          return ''
         case 'number':
         case 'boolean':
           return value.toString()
         case 'date':
           return DateTime.fromJSDate(value).toISO()
+        case 'string':
         case '$object':
         case '$array':
           return value
