@@ -222,7 +222,7 @@ export default {
      */
     updateFieldsRawValues (fields) {
       return fields.map(field => {
-        if (field.userValue) {
+        if (field.hasOwnProperty('userValue')) {
           field.value = parsePrimitiveValue(field.userValue, field.nativeType)
         }
         return field
