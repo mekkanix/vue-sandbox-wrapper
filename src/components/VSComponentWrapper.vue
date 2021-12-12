@@ -78,7 +78,7 @@
  * allowing live props' update through dedicated inputs.
  */
 
-import Vue from 'vue'
+// import Vue from 'vue'
 import { DateTime } from 'luxon'
 import { BFormInput } from 'bootstrap-vue'
 import {
@@ -175,7 +175,7 @@ export default {
       if (this.localFieldsProps.length) {
         instanceConfig.propsData = this.instanceFormattedProps
       }
-      const componentInstance = new Vue(Object.assign(instanceConfig, this.component))
+      const componentInstance = new this.vue(Object.assign(instanceConfig, this.component))
       return componentInstance.$mount().$el.outerHTML
     },
     /**
