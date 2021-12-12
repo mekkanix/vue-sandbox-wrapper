@@ -103,6 +103,13 @@ export default {
 
   props: {
     /**
+     * 
+     */
+    vue: {
+      type: Function,
+      default: null,
+    },
+    /**
      * VueSandbox-formatted component.
      * This object contains a compiled Vue component and some related
      * meta informations.

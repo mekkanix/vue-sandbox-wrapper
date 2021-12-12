@@ -19,6 +19,9 @@ module.exports = {
     path: path.resolve(__dirname, './dist/'),
     filename: 'vue-sandbox-wrapper.js',
   },
+  externals: {
+    vue: 'Vue',
+  },
   module: {
     rules: [
       {
@@ -89,6 +92,7 @@ module.exports = {
   },
   resolve: {
     alias: {
+      // 'bootstrap-vue$': 'bootstrap-vue/src/index.js',
       '@': path.resolve(__dirname, 'src/'),
     }
   },

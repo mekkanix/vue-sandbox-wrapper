@@ -4,7 +4,8 @@
   "description": "Standalone VueSandbox wrapper for live-testing Vue components.",
   "main": "./dist/vue-sandbox-wrapper.js",
   "scripts": {
-    "build": "webpack build"
+    "build": "webpack build",
+    "stats": "webpack --profile --json > stats.json && webpack-bundle-analyzer stats.json dist/"
   },
   "repository": "git@github.com:mekkanix/vue-sandbox-wrapper.git",
   "author": "polo <paulguzdariviere@gmail.com>",
@@ -14,8 +15,7 @@
     "bootstrap": "^5.1.3",
     "bootstrap-vue": "^2.21.2",
     "lodash": "^4.17.21",
-    "luxon": "^2.1.1",
-    "vue": "^2.6.14"
+    "luxon": "^2.1.1"
   },
   "devDependencies": {
     "@babel/core": "^7.16.0",
@@ -29,9 +29,11 @@
     "sass-loader": "^12.4.0",
     "style-loader": "^3.3.1",
     "terser-webpack-plugin": "^5.2.5",
+    "vue": "^2.6.14",
     "vue-loader": "^15.9.8",
     "vue-template-compiler": "^2.6.14",
     "webpack": "^5.65.0",
+    "webpack-bundle-analyzer": "^4.5.0",
     "webpack-cli": "^4.9.1",
     "webpack-remove-empty-scripts": "^0.7.1"
   }
