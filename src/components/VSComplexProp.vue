@@ -1,5 +1,5 @@
 <template>
-  <div class="vsc-complex-prop">
+  <div class="vs-complex-prop">
     <VSPropObjectField
       v-if="type === '$object'"
       v-model="localValue"
@@ -516,4 +516,7 @@ export default {
 
 <style lang="sass" scoped>
 @import url('https://fonts.googleapis.com/css2?family=Source+Code+Pro:wght@400;700&display=swap')
+
+.vs-complex-prop
+  width: 100%
 </style>

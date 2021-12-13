@@ -24,7 +24,7 @@
             >
               <FAIcon
                 :icon="faIcons.attrCaret"
-                class="vsc-prop-object-kname-icn"
+                class="vs-icon sc-prop-object-kname-icn"
               />
               <div class="vsc-prop-object-kname">
                 <template v-if="!field._editing">{{ field.name }}</template>
@@ -33,7 +33,7 @@
                     type="text"
                     v-model="field.name"
                     ref="inputKeyName"
-                    class="vsc-prop-input input-name xs"
+                    class="vsc-prop-attr-input input-name xs"
                     :class="{ 'errored': field._initialized && field._error }"
                     :style="keyNameInputStyles"
                     placeholder="name"
@@ -60,7 +60,7 @@
                 class="vsc-prop-action edit"
                 @click="onEditPropClick(field)"
               >
-                <FAIcon :icon="faIcons.edit" />
+                <FAIcon :icon="faIcons.edit" class="vs-icon" />
               </div>
               <template v-if="field._editing">
                 <div
@@ -68,13 +68,13 @@
                   class="vsc-prop-action validate-edit"
                   @click="onValidatePropEditClick(field)"
                 >
-                  <FAIcon :icon="faIcons.validate" />
+                  <FAIcon :icon="faIcons.validate" class="vs-icon" />
                 </div>
                 <div
                   class="vsc-prop-action cancel-edit"
                   @click="onCancelPropEditClick(field)"
                 >
-                  <FAIcon :icon="faIcons.cancel" />
+                  <FAIcon :icon="faIcons.cancel" class="vs-icon" />
                 </div>
               </template>
               <div
@@ -82,7 +82,7 @@
                 class="vsc-prop-action delete"
                 @click="onDeletePropClick(field)"
               >
-                <FAIcon :icon="faIcons.delete" />
+                <FAIcon :icon="faIcons.delete" class="vs-icon" />
               </div>
             </div>
           </div>
@@ -110,7 +110,7 @@
             >
               <FAIcon
                 :icon="faIcons.attrCaret"
-                class="vsc-prop-object-kname-icn"
+                class="vs-icon vsc-prop-object-kname-icn"
               />
               <div class="vsc-prop-object-kname">
                 <template v-if="!field._editing">{{ field.name }}</template>
@@ -119,7 +119,7 @@
                     type="text"
                     v-model="field.name"
                     ref="inputKeyName"
-                    class="vsc-prop-input input-name xs"
+                    class="vsc-prop-attr-input input-name xs"
                     :class="{ 'errored': field._initialized && field._error }"
                     :style="keyNameInputStyles"
                     placeholder="name"
@@ -146,28 +146,28 @@
                 class="vsc-prop-action validate-edit"
                 @click="onValidatePropEditClick(field)"
               >
-                <FAIcon :icon="faIcons.validate" />
+                <FAIcon :icon="faIcons.validate" class="vs-icon" />
               </div>
               <div
                 v-if="field._editing"
                 class="vsc-prop-action cancel-edit"
                 @click="onCancelPropEditClick(field)"
               >
-                <FAIcon :icon="faIcons.cancel" />
+                <FAIcon :icon="faIcons.cancel" class="vs-icon" />
               </div>
               <div
                 v-if="field._initialized && !field._editing"
                 class="vsc-prop-action edit"
                 @click="onEditPropClick(field)"
               >
-                <FAIcon :icon="faIcons.edit" />
+                <FAIcon :icon="faIcons.edit" class="vs-icon" />
               </div>
               <div
                 v-if="field._initialized"
                 class="vsc-prop-action delete"
                 @click="onDeletePropClick(field)"
               >
-                <FAIcon :icon="faIcons.delete" />
+                <FAIcon :icon="faIcons.delete" class="vs-icon" />
               </div>
             </div>
           </div>
@@ -201,14 +201,14 @@
                 />
                 <div class="vsc-prop-actions">
                   <div class="vsc-prop-action edit" @click="onEditPropClick(field)">
-                    <FAIcon :icon="faIcons.edit" />
+                    <FAIcon :icon="faIcons.edit" class="vs-icon" />
                   </div>
                   <div
                     v-if="field._initialized"
                     class="vsc-prop-action delete"
                     @click="onDeletePropClick(field)"
                   >
-                    <FAIcon :icon="faIcons.delete" />
+                    <FAIcon :icon="faIcons.delete" class="vs-icon" />
                   </div>
                   <div
                     v-if="field._initialized"
@@ -234,7 +234,7 @@
                     type="text"
                     v-model="field.name"
                     ref="inputKeyName"
-                    class="vsc-prop-input input-name xs"
+                    class="vsc-prop-attr-input input-name xs"
                     :class="{ 'errored': field._initialized && field._error }"
                     :style="keyNameInputStyles"
                     placeholder="name"
@@ -252,7 +252,7 @@
                     type="text"
                     v-model="field.userValue"
                     ref="inputKeyValue"
-                    class="vsc-prop-input input-value xs"
+                    class="vsc-prop-attr-input input-value xs"
                     :class="{ 'errored': field._initialized && field._error }"
                     :style="keyValueInputStyles"
                     placeholder="value"
@@ -268,20 +268,20 @@
                     class="vsc-prop-action validate-edit"
                     @click="onValidatePropEditClick(field)"
                   >
-                    <FAIcon :icon="faIcons.validate" />
+                    <FAIcon :icon="faIcons.validate" class="vs-icon" />
                   </div>
                   <div
                     class="vsc-prop-action cancel-edit"
                     @click="onCancelPropEditClick(field)"
                   >
-                    <FAIcon :icon="faIcons.cancel" />
+                    <FAIcon :icon="faIcons.cancel" class="vs-icon" />
                   </div>
                   <div
                     v-if="field._initialized"
                     class="vsc-prop-action delete"
                     @click="onDeletePropClick(field)"
                   >
-                    <FAIcon :icon="faIcons.delete" />
+                    <FAIcon :icon="faIcons.delete" class="vs-icon" />
                   </div>
                 </div>
               </div>
@@ -296,7 +296,7 @@
 
     <div class="vsc-prop-row-actions">
       <span class="vsc-prop-action add-primitive" @click="onAddPropClick()">
-        <FAIcon :icon="faIcons.add" />
+        <FAIcon :icon="faIcons.add" class="vs-icon" />
       </span>
       <span class="vsc-prop-action convert2object add-object" @click="onAddPropClick('$object')">
         +{}
@@ -686,7 +686,7 @@ export default {
 .vsc-prop-field-object
   color: #444
 
-  .vsc-prop-input,
+  .vsc-prop-attr-input,
   .vsc-prop-name
     outline: none
 
@@ -695,7 +695,7 @@ export default {
   .vsc-prop-kname-wrapper
     position: relative
 
-    .vsc-prop-input
+    .vsc-prop-attr-input
       padding: 0
       font-size: 14px
       box-shadow: none
@@ -727,7 +727,7 @@ export default {
     display: none
     padding-left: 10px
     align-items: center
-    font-size: 14px
+    font-size: 11px
 
     .vsc-prop-action
       width: 21px
@@ -744,6 +744,8 @@ export default {
 
       &.convert2object,
       &.convert2array
+        position: relative
+        top: -1px
         font-family: 'Source Code Pro', monospace
         font-size: 12px
         font-weight: 700
@@ -913,13 +915,16 @@ export default {
 
     &:hover .vsc-prop-action,
     &:hover .vsc-prop-action:not(.add-primitive)
-      display: block
+      display: flex
 
     .vsc-prop-action
       flex: 0 0 auto
       color: #777
       cursor: pointer
       text-align: center
+
+      &.add-primitive
+        font-size: 9px
 
       &:not(.add-primitive)
         display: none
