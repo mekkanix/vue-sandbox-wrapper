@@ -1,4 +1,4 @@
-# <center>VueSandbox-wrapper</center>
+# <div align="center">VueSandbox-wrapper</div>
 
 This package is a standalone port of [VueSandbox](git@github.com:mekkanix/vue-sandbox-wrapper.git)'s live-testing system.
 
