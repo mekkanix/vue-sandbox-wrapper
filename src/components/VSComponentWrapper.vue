@@ -43,12 +43,11 @@
                 v-if="['$object', '$array'].includes(prop.type)"
                 v-model="prop.value"
               />
-              <b-form-input
+              <input
                 v-else
                 :type="prop.type"
                 v-model="prop.userValue"
-                size="sm"
-                class="form-control"
+                class="vs-input"
               />
             </div>
           </div>
@@ -78,9 +77,8 @@
  * allowing live props' update through dedicated inputs.
  */
 
-// import Vue from 'vue'
+import Vue from 'vue'
 import { DateTime } from 'luxon'
-import { BFormInput } from 'bootstrap-vue'
 import {
   formatFromNativeType,
   formatFromNativeStrType,
@@ -95,20 +93,12 @@ import VSPropArrayField from '@/components/VSPropArrayField.vue'
 export default {
   name: 'VSComponentWrapper',
   components: {
-    BFormInput,
     VSComplexProp,
     VSPropObjectField,
     VSPropArrayField,
   },
 
   props: {
-    /**
-     * 
-     */
-    vue: {
-      type: Function,
-      default: null,
-    },
     /**
      * VueSandbox-formatted component.
      * This object contains a compiled Vue component and some related
@@ -175,7 +165,7 @@ export default {
       if (this.localFieldsProps.length) {
         instanceConfig.propsData = this.instanceFormattedProps
       }
-      const componentInstance = new this.vue(Object.assign(instanceConfig, this.component))
+      const componentInstance = new Vue(Object.assign(instanceConfig, this.component))
       return componentInstance.$mount().$el.outerHTML
     },
     /**
@@ -315,23 +305,16 @@ export default {
 </script>
 
 <style lang="sass">
-@import 'bootstrap/dist/css/bootstrap.css'
-@import 'bootstrap-vue/dist/bootstrap-vue.css'
-@import 'bootstrap-vue/dist/bootstrap-vue-icons.css'
+.vs-input
+  width: 100%
+  font-size: 16px
+  outline: none
+  background: #f7f7f7
+  border: 1px solid #ddd
 
-// BS Overriding
-.form-control:hover,
-.form-control:focus
-  box-shadow: none
-.form-control:hover,
-.form-control:focus
-  border-color: #6697de
-
-.form-control.xs
-  min-height: calc(1em + 0.15rem + 1px)
-  padding: 0.10rem 0.25rem
-  font-size: 0.750rem
-  border-radius: 0.18rem
+  &:focus
+    background: #fafafa
+    border-color: #999
 </style>
 
 <style lang="sass" scoped>
@@ -385,7 +368,7 @@ export default {
               display: flex
               align-items: center
               justify-content: right
-              height: 50px
+              height: 46px
               padding: 0 8px
               text-align: right
               font-size: 16px
@@ -399,7 +382,13 @@ export default {
 
           .vsc-prop-input
             flex: 0 1 75%
+            display: flex
+            align-items: center
             padding: 8px 8px
+
+            input
+              width: 100%
+              font-size: 16px
 
       &.vsc-meta
         .vsc-section-frame

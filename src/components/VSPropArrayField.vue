@@ -25,11 +25,12 @@
               :class="{ 'opening-disabled': !field._initialized }"
               @click="onNestedGroupKeyNameClick(field)"
             >
-              <b-icon-caret-right-fill
+              <!-- <b-icon-caret-right-fill
                 :font-scale="0.6"
                 color="#555"
                 class="vsc-prop-array-kname-icn"
-              />
+              /> -->
+              <span class="vsc-prop-array-kname-icn">></span>
               <div class="vsc-prop-array-icn">
                 <span class="prop-type">Array</span>
                 <span class="prop-type-icn" v-show="!field.open">[...]</span>
@@ -40,7 +41,8 @@
                 class="vsc-prop-action delete"
                 @click="onDeletePropClick(field)"
               >
-                <b-icon-trash-fill :scale="0.9" />
+                <span>T</span>
+                <!-- <b-icon-trash-fill :scale="0.9" /> -->
               </div>
             </div>
           </div>
@@ -69,11 +71,12 @@
               :class="{ 'opening-disabled': !field._initialized }"
               @click="onNestedGroupKeyNameClick(field)"
             >
-              <b-icon-caret-right-fill
+              <!-- <b-icon-caret-right-fill
                 :font-scale="0.6"
                 color="#555"
                 class="vsc-prop-array-kname-icn"
-              />
+              /> -->
+              <span class="vsc-prop-array-kname-icn">></span>
               <div class="vsc-prop-object-kname">
                 <span class="prop-type">Object</span>
                 <span v-show="!field.open" class="prop-type-icn">{...}</span>
@@ -84,7 +87,8 @@
                 class="vsc-prop-action delete"
                 @click="onDeletePropClick(field)"
               >
-                <b-icon-trash-fill :scale="0.9" />
+                <span>T</span>
+                <!-- <b-icon-trash-fill :scale="0.9" /> -->
               </div>
             </div>
           </div>
@@ -115,14 +119,16 @@
                 />
                 <div class="vsc-prop-actions">
                   <div class="vsc-prop-action edit" @click="onEditPropClick(field)">
-                    <b-icon-pencil-fill :scale="0.7" />
+                    <span>E</span>
+                    <!-- <b-icon-pencil-fill :scale="0.7" /> -->
                   </div>
                   <div
                     v-if="field._initialized"
                     class="vsc-prop-action delete"
                     @click="onDeletePropClick(field)"
                   >
-                    <b-icon-trash-fill :scale="0.9" />
+                    <span>T</span>
+                    <!-- <b-icon-trash-fill :scale="0.9" /> -->
                   </div>
                   <div
                     v-if="field._initialized"
@@ -165,20 +171,23 @@
                     class="vsc-prop-action validate-edit"
                     @click="onValidatePropEditClick(field)"
                   >
-                    <b-icon-check-circle :scale="0.9" />
+                    <span>V</span>
+                    <!-- <b-icon-check-circle :scale="0.9" /> -->
                   </div>
                   <div
                     class="vsc-prop-action cancel-edit"
                     @click="onCancelPropEditClick(field)"
                   >
-                    <b-icon-x-circle :scale="0.9" />
+                    <span>X</span>
+                    <!-- <b-icon-x-circle :scale="0.9" /> -->
                   </div>
                   <div
                     v-if="field._initialized"
                     class="vsc-prop-action delete"
                     @click="onDeletePropClick(field)"
                   >
-                    <b-icon-trash-fill :scale="0.9" />
+                    <span>T</span>
+                    <!-- <b-icon-trash-fill :scale="0.9" /> -->
                   </div>
                 </div>
               </div>
@@ -192,7 +201,8 @@
     </template>
     <div class="vsc-prop-row-actions">
       <span class="vsc-prop-action add-primitive" @click="onAddPropClick()">
-        <b-icon-plus-circle :scale="1" />
+        <span>+</span>
+        <!-- <b-icon-plus-circle :scale="1" /> -->
       </span>
       <span class="vsc-prop-action convert2object add-object" @click="onAddPropClick('$object')">
         +{}
@@ -214,14 +224,12 @@
  * unlimited depth levels.
  */
 
-import { BIconPlusCircle } from 'bootstrap-vue'
 import { isValidPropName, isValidCodePrimitiveValue, } from '@/helpers/Validator.js'
 import VSPrimitiveValue from '@/components/VSPrimitiveValue.vue'
 
 export default {
   name: 'VSPropArrayField',
   components: {
-    BIconPlusCircle,
     VSPrimitiveValue,
   },
 
