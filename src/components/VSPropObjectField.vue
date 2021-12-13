@@ -31,18 +31,17 @@
               <div class="vsc-prop-object-kname">
                 <template v-if="!field._editing">{{ field.name }}</template>
                 <template v-else>
-                  <b-form-input
+                  <input
                     type="text"
                     v-model="field.name"
                     ref="inputKeyName"
-                    size="sm"
                     class="vsc-prop-input input-name xs"
                     :class="{ 'errored': field._initialized && field._error }"
                     :style="keyNameInputStyles"
                     placeholder="name"
                     autocomplete="none"
-                    @keyup.enter.native="onValidatePropEditClick(field)"
-                    @keyup.esc.native="onCancelPropEditClick(field)"
+                    @keyup.enter="onValidatePropEditClick(field)"
+                    @keyup.esc="onCancelPropEditClick(field)"
                     @click.stop
                   />
                   <div class="vsc-prop-v-input v-input-name" ref="vInputKeyName">{{ field.name }}</div>
@@ -124,18 +123,17 @@
               <div class="vsc-prop-object-kname">
                 <template v-if="!field._editing">{{ field.name }}</template>
                 <template v-else>
-                  <b-form-input
+                  <input
                     type="text"
                     v-model="field.name"
                     ref="inputKeyName"
-                    size="sm"
                     class="vsc-prop-input input-name xs"
                     :class="{ 'errored': field._initialized && field._error }"
                     :style="keyNameInputStyles"
                     placeholder="name"
                     autocomplete="none"
-                    @keyup.enter.native="onValidatePropEditClick(field)"
-                    @keyup.esc.native="onCancelPropEditClick(field)"
+                    @keyup.enter="onValidatePropEditClick(field)"
+                    @keyup.esc="onCancelPropEditClick(field)"
                     @click.stop
                   />
                   <div class="vsc-prop-v-input v-input-name" ref="vInputKeyName">{{ field.name }}</div>
@@ -246,18 +244,17 @@
             <template v-else>
               <div class="vsc-prop-name">
                 <div class="vsc-prop-kv-wrapper vsc-prop-name-wrapper">
-                  <b-form-input
+                  <input
                     type="text"
                     v-model="field.name"
                     ref="inputKeyName"
-                    size="sm"
                     class="vsc-prop-input input-name xs"
                     :class="{ 'errored': field._initialized && field._error }"
                     :style="keyNameInputStyles"
                     placeholder="name"
                     autocomplete="none"
-                    @keyup.enter.native="onValidatePropEditClick(field)"
-                    @keyup.esc.native="onCancelPropEditClick(field)"
+                    @keyup.enter="onValidatePropEditClick(field)"
+                    @keyup.esc="onCancelPropEditClick(field)"
                   />
                   <div class="vsc-prop-v-input v-input-name" ref="vInputKeyName">{{ field.name }}</div>
                 </div>
@@ -265,18 +262,17 @@
               </div>
               <div class="vsc-prop-value">
                 <div class="vsc-prop-kv-wrapper vsc-prop-value-wrapper">
-                  <b-form-input
+                  <input
                     type="text"
                     v-model="field.userValue"
                     ref="inputKeyValue"
-                    size="sm"
                     class="vsc-prop-input input-value xs"
                     :class="{ 'errored': field._initialized && field._error }"
                     :style="keyValueInputStyles"
                     placeholder="value"
                     autocomplete="none"
-                    @keyup.enter.native="onValidatePropEditClick(field)"
-                    @keyup.esc.native="onCancelPropEditClick(field)"
+                    @keyup.enter="onValidatePropEditClick(field)"
+                    @keyup.esc="onCancelPropEditClick(field)"
                   />
                   <div class="vsc-prop-v-input v-input-value" ref="vInputKeyValue">{{ field.userValue }}</div>
                 </div>
@@ -503,8 +499,8 @@ export default {
      * @return  {void}
      */
     autosetInputsElements () {
-      this.$inputKeyName = this.$refs.inputKeyName && this.$refs.inputKeyName.length ? this.$refs.inputKeyName[0].$el : null
-      this.$inputKeyValue = this.$refs.inputKeyValue && this.$refs.inputKeyValue.length ? this.$refs.inputKeyValue[0].$el : null
+      this.$inputKeyName = this.$refs.inputKeyName && this.$refs.inputKeyName.length ? this.$refs.inputKeyName[0] : null
+      this.$inputKeyValue = this.$refs.inputKeyValue && this.$refs.inputKeyValue.length ? this.$refs.inputKeyValue[0] : null
       this.$vInputKeyName = this.$refs.vInputKeyName && this.$refs.vInputKeyName.length ? this.$refs.vInputKeyName[0] : null
       this.$vInputKeyValue = this.$refs.vInputKeyValue && this.$refs.vInputKeyValue.length ? this.$refs.vInputKeyValue[0] : null
     },
@@ -685,6 +681,10 @@ export default {
 <style lang="sass" scoped>
 .vsc-prop-field-object
   color: #444
+
+  .vsc-prop-input,
+  .vsc-prop-name
+    outline: none
 
   // Generic
   .vsc-prop-kv-wrapper,

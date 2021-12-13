@@ -150,18 +150,17 @@
             <template v-else>
               <div class="vsc-prop-value">
                 <div class="vsc-prop-kv-wrapper vsc-prop-value-wrapper">
-                  <b-form-input
+                  <input
                     type="text"
                     v-model="field.userValue"
                     ref="inputKeyValue"
-                    size="sm"
                     class="vsc-prop-input input-value xs"
                     :class="{ 'errored': field._initialized && field._error }"
                     :style="keyValueInputStyles"
                     placeholder="value"
                     autocomplete="none"
-                    @keyup.enter.native="onValidatePropEditClick(field)"
-                    @keyup.esc.native="onCancelPropEditClick(field)"
+                    @keyup.enter="onValidatePropEditClick(field)"
+                    @keyup.esc="onCancelPropEditClick(field)"
                   />
                   <div class="vsc-prop-v-input v-input-value" ref="vInputKeyValue">{{ field.userValue }}</div>
                 </div>
@@ -360,7 +359,7 @@ export default {
      * @return  {void}
      */
     autosetInputsElements () {
-      this.$inputKeyValue = this.$refs.inputKeyValue && this.$refs.inputKeyValue.length ? this.$refs.inputKeyValue[0].$el : null
+      this.$inputKeyValue = this.$refs.inputKeyValue && this.$refs.inputKeyValue.length ? this.$refs.inputKeyValue[0] : null
       this.$vInputKeyValue = this.$refs.vInputKeyValue && this.$refs.vInputKeyValue.length ? this.$refs.vInputKeyValue[0] : null
     },
     /**
@@ -538,9 +537,9 @@ export default {
 .vsc-prop-field-array
   color: #444
 
-  .vsc-prop-field-wrapper
-    // display: flex
-    // padding-left: 10px
+  .vsc-prop-input,
+  .vsc-prop-name
+    outline: none
 
   .vsc-prop-kv-wrapper,
   .vsc-prop-kname-wrapper

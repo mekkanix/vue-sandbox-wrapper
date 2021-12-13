@@ -5,7 +5,7 @@
   "main": "./dist/vue-sandbox-wrapper.js",
   "scripts": {
     "build": "webpack build",
-    "stats": "webpack --profile --json > stats.json && webpack-bundle-analyzer stats.json dist/"
+    "stats": "webpack --profile --json > stats.json && webpack-bundle-analyzer stats.json dist/ --no-open"
   },
   "repository": "git@github.com:mekkanix/vue-sandbox-wrapper.git",
   "author": "polo <paulguzdariviere@gmail.com>",
