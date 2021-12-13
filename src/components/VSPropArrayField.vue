@@ -25,12 +25,10 @@
               :class="{ 'opening-disabled': !field._initialized }"
               @click="onNestedGroupKeyNameClick(field)"
             >
-              <!-- <b-icon-caret-right-fill
-                :font-scale="0.6"
-                color="#555"
+              <FAIcon
+                :icon="faIcons.attrCaret"
                 class="vsc-prop-array-kname-icn"
-              /> -->
-              <span class="vsc-prop-array-kname-icn">></span>
+              />
               <div class="vsc-prop-array-icn">
                 <span class="prop-type">Array</span>
                 <span class="prop-type-icn" v-show="!field.open">[...]</span>
@@ -41,8 +39,7 @@
                 class="vsc-prop-action delete"
                 @click="onDeletePropClick(field)"
               >
-                <span>T</span>
-                <!-- <b-icon-trash-fill :scale="0.9" /> -->
+                <FAIcon :icon="faIcons.delete" />
               </div>
             </div>
           </div>
@@ -71,12 +68,10 @@
               :class="{ 'opening-disabled': !field._initialized }"
               @click="onNestedGroupKeyNameClick(field)"
             >
-              <!-- <b-icon-caret-right-fill
-                :font-scale="0.6"
-                color="#555"
+              <FAIcon
+                :icon="faIcons.attrCaret"
                 class="vsc-prop-array-kname-icn"
-              /> -->
-              <span class="vsc-prop-array-kname-icn">></span>
+              />
               <div class="vsc-prop-object-kname">
                 <span class="prop-type">Object</span>
                 <span v-show="!field.open" class="prop-type-icn">{...}</span>
@@ -87,8 +82,7 @@
                 class="vsc-prop-action delete"
                 @click="onDeletePropClick(field)"
               >
-                <span>T</span>
-                <!-- <b-icon-trash-fill :scale="0.9" /> -->
+                <FAIcon :icon="faIcons.delete" />
               </div>
             </div>
           </div>
@@ -119,16 +113,14 @@
                 />
                 <div class="vsc-prop-actions">
                   <div class="vsc-prop-action edit" @click="onEditPropClick(field)">
-                    <span>E</span>
-                    <!-- <b-icon-pencil-fill :scale="0.7" /> -->
+                    <FAIcon :icon="faIcons.edit" />
                   </div>
                   <div
                     v-if="field._initialized"
                     class="vsc-prop-action delete"
                     @click="onDeletePropClick(field)"
                   >
-                    <span>T</span>
-                    <!-- <b-icon-trash-fill :scale="0.9" /> -->
+                    <FAIcon :icon="faIcons.delete" />
                   </div>
                   <div
                     v-if="field._initialized"
@@ -170,23 +162,20 @@
                     class="vsc-prop-action validate-edit"
                     @click="onValidatePropEditClick(field)"
                   >
-                    <span>V</span>
-                    <!-- <b-icon-check-circle :scale="0.9" /> -->
+                    <FAIcon :icon="faIcons.validate" />
                   </div>
                   <div
                     class="vsc-prop-action cancel-edit"
                     @click="onCancelPropEditClick(field)"
                   >
-                    <span>X</span>
-                    <!-- <b-icon-x-circle :scale="0.9" /> -->
+                    <FAIcon :icon="faIcons.cancel" />
                   </div>
                   <div
                     v-if="field._initialized"
                     class="vsc-prop-action delete"
                     @click="onDeletePropClick(field)"
                   >
-                    <span>T</span>
-                    <!-- <b-icon-trash-fill :scale="0.9" /> -->
+                    <FAIcon :icon="faIcons.delete" />
                   </div>
                 </div>
               </div>
@@ -200,8 +189,7 @@
     </template>
     <div class="vsc-prop-row-actions">
       <span class="vsc-prop-action add-primitive" @click="onAddPropClick()">
-        <span>+</span>
-        <!-- <b-icon-plus-circle :scale="1" /> -->
+        <FAIcon :icon="faIcons.add" />
       </span>
       <span class="vsc-prop-action convert2object add-object" @click="onAddPropClick('$object')">
         +{}
@@ -222,13 +210,22 @@
  * This component uses the "recursive component" system to allow
  * unlimited depth levels.
  */
-
+import { FontAwesomeIcon as FAIcon } from '@fortawesome/vue-fontawesome'
+import {
+  faPlus,
+  faEdit,
+  faTrash,
+  faTimes,
+  faCheck,
+  faCaretRight,
+} from '@fortawesome/free-solid-svg-icons'
 import { isValidPropName, isValidCodePrimitiveValue, } from '@/helpers/Validator.js'
 import VSPrimitiveValue from '@/components/VSPrimitiveValue.vue'
 
 export default {
   name: 'VSPropArrayField',
   components: {
+    FAIcon,
     VSPrimitiveValue,
   },
 
@@ -264,6 +261,17 @@ export default {
   },
 
   data: () => ({
+    /**
+     * -
+     */
+    faIcons: {
+      add: faPlus,
+      edit: faEdit,
+      delete: faTrash,
+      cancel: faTimes,
+      validate: faCheck,
+      attrCaret: faCaretRight,
+    },
     /**
      * `VSObjectPropField` component definition filled when needed
      * for nested object-based fields.
