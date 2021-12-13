@@ -77,7 +77,6 @@
  * allowing live props' update through dedicated inputs.
  */
 
-import Vue from 'vue'
 import { DateTime } from 'luxon'
 import {
   formatFromNativeType,
@@ -99,6 +98,17 @@ export default {
   },
 
   props: {
+    /**
+     * The user-provided Vue constructor.
+     * This is needed for off-context components' instanciation, and
+     * because we don't want to bundle Vue in our bundle.
+     *
+     * @type {object}
+     */
+    vue: {
+      type: Object,
+      default: null,
+    },
     /**
      * VueSandbox-formatted component.
      * This object contains a compiled Vue component and some related
@@ -165,7 +175,7 @@ export default {
       if (this.localFieldsProps.length) {
         instanceConfig.propsData = this.instanceFormattedProps
       }
-      const componentInstance = new Vue(Object.assign(instanceConfig, this.component))
+      const componentInstance = new this.vue(Object.assign(instanceConfig, this.component))
       return componentInstance.$mount().$el.outerHTML
     },
     /**

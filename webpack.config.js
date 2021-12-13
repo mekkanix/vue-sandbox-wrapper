@@ -19,9 +19,9 @@ module.exports = {
     path: path.resolve(__dirname, './dist/'),
     filename: 'vue-sandbox-wrapper.js',
   },
-  // externals: {
-  //   vue: 'Vue',
-  // },
+  externals: {
+    vue: 'Vue',
+  },
   module: {
     rules: [
       {
