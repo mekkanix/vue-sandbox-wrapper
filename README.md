@@ -1,6 +1,6 @@
 # <div align="center">VueSandbox-wrapper</div>
 
-This package is a standalone port of [VueSandbox](git@github.com:mekkanix/vue-sandbox-wrapper.git)'s live-testing system.
+This package is a standalone port of the [VueSandbox](git@github.com:mekkanix/vue-sandbox-wrapper.git)'s live-testing system.
 
 It is designed to be integrated in an existing codebase, and provides an "out-of-the-box" working Vue component for live-testing Vue components in your application.
 

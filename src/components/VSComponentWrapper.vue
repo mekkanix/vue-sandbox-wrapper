@@ -106,7 +106,7 @@ export default {
      * @type {object}
      */
     vue: {
-      type: Object,
+      type: Function,
       default: null,
     },
     /**
