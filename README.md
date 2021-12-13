@@ -8,7 +8,9 @@ It is designed to be integrated in an existing codebase, and provides an "out-of
 
 # Compatibility
 
-Note that **Vue v2.6.8** or greater *(Vue 3 not currently supported)* is required.
+Note that **Vue v2.6.8** or greater is required on your project. Vue 3 is not currently supported.
+
+:warning: Vue is **not** provided in this package and you'll need to inject it manually to the main `VSComponentWrapper` component (as described in the [API Reference](#api-reference) section below).
 
 ### Browsers
 
@@ -38,13 +40,13 @@ npm i vue-sandbox-wrapper --save
 yarn add vue-sandbox-wrapper
 ```
 
-### Usage
+## Usage
 
 This package is currently bundled in the [UMD](https://github.com/umdjs/umd) format, meaning it can be integrated to your project in several ways.
 
 *Note: This package currently relies on a Vue.js context present in the hosting project. A full working vanilla-based version will be released later.*
 
-#### Module Builder
+### Module Builder
 
 This is the preferred method to use.
 
@@ -55,14 +57,14 @@ import 'vue-sandbox-wrapper/dist/vue-sandbox-wrapper.css'
 
 *Note: A plugin-based version (allowing global `VSComponentWrapper` registration) will be released later.*
 
-#### HTML `<script>` tags
+### HTML `<script>` tags
 
 ```html
 <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/vue-sandbox-wrapper@1.0.0-beta.2/dist/vue-sandbox-wrapper.js"></script>
 <link type="text/css" src="https://cdn.jsdelivr.net/npm/vue-sandbox-wrapper@1.0.0-beta.2/dist/vue-sandbox-wrapper.css">
 ```
 
-### API Reference
+## API Reference
 
 #### Component: `VSComponentWrapper`
 

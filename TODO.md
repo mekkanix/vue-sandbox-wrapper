@@ -13,3 +13,7 @@
 [Priority: 2]
 
 - Allow global- or window-based Vue usage instead of providing through props
+
+[Priority: 3]
+
+- Clean `public` folder from test components
