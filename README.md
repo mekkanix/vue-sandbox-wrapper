@@ -40,20 +40,22 @@ yarn add vue-sandbox-wrapper
 
 ### Usage
 
-This package is currently bundled as a [UMD](https://github.com/umdjs/umd) module, so it can be used in several ways.
+This package is currently bundled in the [UMD](https://github.com/umdjs/umd) format, meaning it can be integrated to your project in several ways.
+
+*Note: This package currently relies on a Vue.js context present in the hosting project. A full working vanilla-based version will be released later.*
 
 #### Module Builder
 
-This is the preferred way to use 
+This is the preferred method to use.
 
 ```js
 import { VSComponentWrapper } from 'vue-sandbox-wrapper'
 import 'vue-sandbox-wrapper/dist/vue-sandbox-wrapper.css'
 ```
 
-*Note: A installable plugin will be added in a next release to use this component globally without importing it manually.*
+*Note: A plugin-based version (allowing global `VSComponentWrapper` registration) will be released later.*
 
-#### HTML Tags
+#### HTML `<script>` tags
 
 ```html
 <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/vue-sandbox-wrapper@1.0.0-beta.1/dist/vue-sandbox-wrapper.js"></script>
@@ -62,15 +64,14 @@ import 'vue-sandbox-wrapper/dist/vue-sandbox-wrapper.css'
 
 ### API Reference
 
-#### VSComponentWrapper
+#### Component: `VSComponentWrapper`
 
 **Props**
 
-| Name                  | Type    | Required | Default | Description |
-|:---------------------:|:-------:|:--------:|:-------:|:-----------:|
-| vsComponent           | object  | Yes      | -       |             |
-| vsComponent.component | object  | Yes      | -       | Compiled Vue component you want to live-test. |
-| vsComponent.filepath  | string  | No       | -       | Component's `public/`-relative filepath. |
+| Name      | Type     | Required | Default | Description |
+|:---------:|:--------:|:--------:|:-------:|:-----------:|
+| vue       | function | Yes      | -       | The Vue constructor. |
+| component | object  | Yes      | -       | Compiled Vue component you want to live-test. |
 
 ## Licensing
 

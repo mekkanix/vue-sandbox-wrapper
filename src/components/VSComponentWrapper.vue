@@ -110,13 +110,9 @@ export default {
       default: null,
     },
     /**
-     * VueSandbox-formatted component.
-     * This object contains a compiled Vue component and some related
-     * meta informations.
+     * The Vue-compiled component to live-test.
      *
-     * Its format must comply to the following rules:
-     * @property component {object} [required] - Vue-compiled component.
-     * @property filepath {object} [optional] - Component relative file path.
+     * @type {object}
      */
     component: {
       type: Object,
