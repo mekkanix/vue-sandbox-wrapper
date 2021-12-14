@@ -140,7 +140,19 @@
                 <span class="prop-type-icn" v-show="!field.open">[...]</span>
               </div>
             </div>
-            <div class="vsc-prop-actions">
+            <VSPropToolbar
+              class="vsc-prop-actions"
+              :initialized="field._initialized"
+              :editing="field._editing"
+              :errored="field._error"
+              :to-object="true"
+              :to-array="true"
+              @edit="onEditPropClick(field)"
+              @validate-edit="onValidatePropEditClick(field)"
+              @cancel="onCancelPropEditClick(field)"
+              @delete="onDeletePropClick(field)"
+            />
+            <!-- <div class="vsc-prop-actions">
               <div
                 v-if="field._editing && !field._error"
                 class="vsc-prop-action validate-edit"
@@ -169,7 +181,7 @@
               >
                 <FAIcon :icon="faIcons.delete" class="vs-icon" />
               </div>
-            </div>
+            </div> -->
           </div>
           <!-- VSPropArrayField -->
           <component
@@ -328,12 +340,14 @@ import {
   faCaretRight,
 } from '@fortawesome/free-solid-svg-icons'
 import { isValidPropName, isValidCodePrimitiveValue, } from '@/helpers/Validator.js'
-import VSPrimitiveValue from '@/components/VSPrimitiveValue.vue'
+import VSPropToolbar from './VSPropToolbar.vue'
+import VSPrimitiveValue from './VSPrimitiveValue.vue'
 
 export default {
   name: 'VSPropObjectField',
   components: {
     FAIcon,
+    VSPropToolbar,
     VSPrimitiveValue,
   },
 
@@ -886,7 +900,7 @@ export default {
         margin-left: 1px
 
     &:hover .vsc-prop-actions
-      display: flex
+      display: block
 
     .vsc-prop-name
       display: inline-flex
