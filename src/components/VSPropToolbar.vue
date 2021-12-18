@@ -33,6 +33,22 @@
       >
         <FAIcon :icon="faIcons.delete" class="vs-icon" />
       </div>
+      <!-- Object Conversion -->
+      <div
+        v-if="initialized && toObject"
+        class="action convert2object"
+        @click="onConvertToObjectPropClick(field)"
+      >
+        <span>{}</span>
+      </div>
+      <!-- Array Conversion -->
+      <div
+        v-if="initialized && toArray"
+        class="action convert2array"
+        @click="onConvertToArrayPropClick(field)"
+      >
+        <span>[]</span>
+      </div>
     </div>
   </div>
 </template>
