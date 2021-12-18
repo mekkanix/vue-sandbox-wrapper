@@ -34,14 +34,18 @@
                 <span class="prop-type-icn" v-show="!field.open">[...]</span>
               </div>
             </div>
-            <div class="vsc-prop-array-actions">
-              <div
-                class="vsc-prop-action delete"
-                @click="onDeletePropClick(field)"
-              >
-                <FAIcon :icon="faIcons.delete" class="vs-icon" />
-              </div>
-            </div>
+            <VSPropToolbar
+              class="vsc-prop-array-actions"
+              :initialized="field._initialized"
+              :editable="false"
+              :errored="field._error"
+              :to-object="false"
+              :to-array="false"
+              @edit="onEditPropClick(field)"
+              @validate-edit="onValidatePropEditClick(field)"
+              @cancel="onCancelPropEditClick(field)"
+              @delete="onDeletePropClick(field)"
+            />
           </div>
           <VSPropArrayField
             v-show="field.open"
@@ -77,14 +81,18 @@
                 <span v-show="!field.open" class="prop-type-icn">{...}</span>
               </div>
             </div>
-            <div class="vsc-prop-actions">
-              <div
-                class="vsc-prop-action delete"
-                @click="onDeletePropClick(field)"
-              >
-                <FAIcon :icon="faIcons.delete" class="vs-icon" />
-              </div>
-            </div>
+            <VSPropToolbar
+              class="vsc-prop-actions"
+              :initialized="field._initialized"
+              :editable="false"
+              :errored="field._error"
+              :to-object="false"
+              :to-array="false"
+              @edit="onEditPropClick(field)"
+              @validate-edit="onValidatePropEditClick(field)"
+              @cancel="onCancelPropEditClick(field)"
+              @delete="onDeletePropClick(field)"
+            />
           </div>
           <!-- VSPropObjectField -->
           <component
@@ -111,32 +119,20 @@
                   :value="field.value"
                   :type="field.type"
                 />
-                <div class="vsc-prop-actions">
-                  <div class="vsc-prop-action edit" @click="onEditPropClick(field)">
-                    <FAIcon :icon="faIcons.edit" class="vs-icon" />
-                  </div>
-                  <div
-                    v-if="field._initialized"
-                    class="vsc-prop-action delete"
-                    @click="onDeletePropClick(field)"
-                  >
-                    <FAIcon :icon="faIcons.delete" class="vs-icon" />
-                  </div>
-                  <div
-                    v-if="field._initialized"
-                    class="vsc-prop-action convert2object"
-                    @click="onConvertToObjectPropClick(field)"
-                  >
-                    <span>{}</span>
-                  </div>
-                  <div
-                    v-if="field._initialized"
-                    class="vsc-prop-action convert2array"
-                    @click="onConvertToArrayPropClick(field)"
-                  >
-                    <span>[]</span>
-                  </div>
-                </div>
+                <VSPropToolbar
+                  class="vsc-prop-actions"
+                  :initialized="field._initialized"
+                  :editing="field._editing"
+                  :errored="field._error"
+                  :to-object="true"
+                  :to-array="true"
+                  @edit="onEditPropClick(field)"
+                  @validate-edit="onValidatePropEditClick(field)"
+                  @cancel="onCancelPropEditClick(field)"
+                  @delete="onDeletePropClick(field)"
+                  @convert-to-object="onConvertToObjectPropClick(field)"
+                  @convert-to-array="onConvertToArrayPropClick(field)"
+                />
               </div>
             </template>
             <template v-else>
@@ -156,28 +152,18 @@
                   />
                   <div class="vsc-prop-v-input v-input-value" ref="vInputKeyValue">{{ field.userValue }}</div>
                 </div>
-                <div class="vsc-prop-actions">
-                  <div
-                    v-if="!field._error"
-                    class="vsc-prop-action validate-edit"
-                    @click="onValidatePropEditClick(field)"
-                  >
-                    <FAIcon :icon="faIcons.validate" class="vs-icon" />
-                  </div>
-                  <div
-                    class="vsc-prop-action cancel-edit"
-                    @click="onCancelPropEditClick(field)"
-                  >
-                    <FAIcon :icon="faIcons.cancel" class="vs-icon" />
-                  </div>
-                  <div
-                    v-if="field._initialized"
-                    class="vsc-prop-action delete"
-                    @click="onDeletePropClick(field)"
-                  >
-                    <FAIcon :icon="faIcons.delete" class="vs-icon" />
-                  </div>
-                </div>
+                <VSPropToolbar
+                  class="vsc-prop-actions"
+                  :initialized="field._initialized"
+                  :editing="field._editing"
+                  :errored="field._error"
+                  :to-object="false"
+                  :to-array="false"
+                  @edit="onEditPropClick(field)"
+                  @validate-edit="onValidatePropEditClick(field)"
+                  @cancel="onCancelPropEditClick(field)"
+                  @delete="onDeletePropClick(field)"
+                />
               </div>
             </template>
           </div>
@@ -220,12 +206,14 @@ import {
   faCaretRight,
 } from '@fortawesome/free-solid-svg-icons'
 import { isValidPropName, isValidCodePrimitiveValue, } from '@/helpers/Validator.js'
+import VSPropToolbar from './VSPropToolbar.vue'
 import VSPrimitiveValue from '@/components/VSPrimitiveValue.vue'
 
 export default {
   name: 'VSPropArrayField',
   components: {
     FAIcon,
+    VSPropToolbar,
     VSPrimitiveValue,
   },
 

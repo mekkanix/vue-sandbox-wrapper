@@ -173,6 +173,8 @@
                   @validate-edit="onValidatePropEditClick(field)"
                   @cancel="onCancelPropEditClick(field)"
                   @delete="onDeletePropClick(field)"
+                  @convert-to-object="onConvertToObjectPropClick(field)"
+                  @convert-to-array="onConvertToArrayPropClick(field)"
                 />
               </div>
             </template>

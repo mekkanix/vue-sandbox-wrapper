@@ -3,7 +3,7 @@
     <div class="vs-prop-toolbar-actions">
       <!-- Edit -->
       <div
-        v-if="initialized && !editing"
+        v-if="initialized && editable && !editing"
         class="action edit"
         @click="onEditClick"
       >
@@ -11,7 +11,7 @@
       </div>
       <!-- Validate Edit -->
       <div
-        v-if="editing && !errored"
+        v-if="editable && editing && !errored"
         class="action validate-edit"
         @click="onValidateEditClick"
       >
@@ -19,7 +19,7 @@
       </div>
       <!-- Cancel Edit -->
       <div
-        v-if="editing"
+        v-if="editable && editing"
         class="action cancel-edit"
         @click="onCancelEditClick"
       >
@@ -37,7 +37,7 @@
       <div
         v-if="initialized && toObject"
         class="action convert2object"
-        @click="onConvertToObjectPropClick(field)"
+        @click="onConvertToObjectClick"
       >
         <span>{}</span>
       </div>
@@ -45,7 +45,7 @@
       <div
         v-if="initialized && toArray"
         class="action convert2array"
-        @click="onConvertToArrayPropClick(field)"
+        @click="onConvertToArrayClick"
       >
         <span>[]</span>
       </div>
@@ -78,6 +78,10 @@ export default {
     editing: {
       type: Boolean,
       default: false,
+    },
+    editable: {
+      type: Boolean,
+      default: true,
     },
     errored: {
       type: Boolean,
@@ -119,6 +123,12 @@ export default {
     },
     onDeleteClick () {
       this.$emit('delete')
+    },
+    onConvertToObjectClick () {
+      this.$emit('convert-to-object')
+    },
+    onConvertToArrayClick () {
+      this.$emit('convert-to-array')
     },
   },
 }
