@@ -5,6 +5,7 @@ const VueLoaderPlugin = require('vue-loader/lib/plugin')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 const RemoveEmptyScriptsPlugin = require("webpack-remove-empty-scripts")
 const CSSMinimizerPlugin = require('css-minimizer-webpack-plugin')
+const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin
 
 module.exports = {
   mode: 'production',
@@ -103,10 +104,16 @@ module.exports = {
   },
   plugins: [
     new VueLoaderPlugin(),
+    autoprefixer,
     new MiniCssExtractPlugin({
       filename: 'vue-sandbox-wrapper.css',
     }),
     new RemoveEmptyScriptsPlugin(),
-    autoprefixer,
+    new BundleAnalyzerPlugin({
+      analyzerMode: 'server',
+      analyzerPort: 8889,
+      generateStatsFile: true,
+      openAnalyzer: false,
+    }),
   ],
 }

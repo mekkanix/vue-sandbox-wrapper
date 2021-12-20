@@ -4,7 +4,7 @@
   "description": "Standalone VueSandbox wrapper for live-testing Vue components.",
   "main": "./dist/vue-sandbox-wrapper.js",
   "scripts": {
-    "build": "webpack build",
+    "build": "webpack build --progress",
     "stats": "webpack --profile --json > stats.json && webpack-bundle-analyzer stats.json dist/ --no-open"
   },
   "repository": "git@github.com:mekkanix/vue-sandbox-wrapper.git",
