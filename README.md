@@ -60,8 +60,8 @@ import 'vue-sandbox-wrapper/dist/vue-sandbox-wrapper.css'
 ### HTML `<script>` tags
 
 ```html
-<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/vue-sandbox-wrapper@1.0.0-beta.2/dist/vue-sandbox-wrapper.js"></script>
-<link type="text/css" src="https://cdn.jsdelivr.net/npm/vue-sandbox-wrapper@1.0.0-beta.2/dist/vue-sandbox-wrapper.css">
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/vue-sandbox-wrapper@1.0.0-beta.3/dist/vue-sandbox-wrapper.js"></script>
+<link type="text/css" src="https://cdn.jsdelivr.net/npm/vue-sandbox-wrapper@1.0.0-beta.3/dist/vue-sandbox-wrapper.css">
 ```
 
 ## API Reference
