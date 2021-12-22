@@ -24,7 +24,7 @@
             >
               <FAIcon
                 :icon="faIcons.attrCaret"
-                class="vs-icon sc-prop-object-kname-icn"
+                class="vs-icon vsc-prop-object-kname-icn"
               />
               <div class="vsc-prop-object-kname">
                 <template v-if="!field._editing">{{ field.name }}</template>
@@ -745,7 +745,7 @@ export default {
         .vsc-prop-object-kname-icn
           position: absolute
           left: 4px
-          top: 6px
+          top: 3px
         .vsc-prop-object-kname
           display: flex
           padding-left: 15px
@@ -793,7 +793,7 @@ export default {
         .vsc-prop-object-kname-icn
           position: absolute
           left: 4px
-          top: 6px
+          top: 3px
         .vsc-prop-object-kname
           display: flex
           padding-left: 15px

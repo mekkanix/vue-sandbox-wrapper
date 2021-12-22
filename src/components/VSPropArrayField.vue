@@ -656,7 +656,7 @@ export default {
         .vsc-prop-array-kname-icn
           position: absolute
           left: -2px
-          top: 6px
+          top: 3px
         .vsc-prop-object-kname
           display: flex
           padding-left: 9px
@@ -700,7 +700,7 @@ export default {
         .vsc-prop-array-kname-icn
           position: absolute
           left: -2px
-          top: 6px
+          top: 3px
         .vsc-prop-array-kname
           display: flex
           padding-left: 15px
