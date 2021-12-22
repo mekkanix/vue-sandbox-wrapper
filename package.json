@@ -1,6 +1,6 @@
 {
   "name": "vue-sandbox-wrapper",
-  "version": "1.0.0-beta.3",
+  "version": "1.0.0-beta.4",
   "description": "Standalone VueSandbox wrapper for live-testing Vue components.",
   "main": "./dist/vue-sandbox-wrapper.js",
   "scripts": {

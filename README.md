@@ -6,7 +6,11 @@ It is designed to be integrated in an existing codebase, and provides an "out-of
 
 *If you're looking for the complete VueSandbox utility, you can find it [here](https://github.com/mekkanix/vue-sandbox).*
 
-# Compatibility
+### Disclaimer
+
+This package is still in an unstable version (beta.4) so it's not suitable for a production-ready usage.
+
+<!-- ## Compatibility
 
 Note that **Vue v2.6.8** or greater is required on your project. Vue 3 is not currently supported.
 
@@ -81,5 +85,5 @@ Released under the [MIT](https://opensource.org/licenses/MIT) license.
 
 ## Contribute
 
-Soon...
+Soon... -->
 
