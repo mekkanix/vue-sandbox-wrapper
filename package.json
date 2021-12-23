@@ -8,7 +8,7 @@
     "stats": "webpack --profile --json > stats.json && webpack-bundle-analyzer stats.json dist/ --no-open"
   },
   "repository": "git@github.com:mekkanix/vue-sandbox-wrapper.git",
-  "author": "polo <paulguzdariviere@gmail.com>",
+  "author": "Mekkanix <paulguzdariviere@gmail.com>",
   "license": "MIT",
   "private": false,
   "dependencies": {
