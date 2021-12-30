@@ -8,7 +8,7 @@ It is designed to be integrated in an existing codebase, and provides an "out-of
 
 ### Disclaimer
 
-This package is still in an unstable version (beta.4) so it's not suitable for a production-ready usage.
+This package is still in an unstable version (beta.5) so it's not suitable for a production-ready usage.
 
 <!-- ## Compatibility
 
@@ -64,8 +64,8 @@ import 'vue-sandbox-wrapper/dist/vue-sandbox-wrapper.css'
 ### HTML `<script>` tags
 
 ```html
-<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/vue-sandbox-wrapper@1.0.0-beta.4/dist/vue-sandbox-wrapper.js"></script>
-<link type="text/css" src="https://cdn.jsdelivr.net/npm/vue-sandbox-wrapper@1.0.0-beta.4/dist/vue-sandbox-wrapper.css">
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/vue-sandbox-wrapper@1.0.0-beta.5/dist/vue-sandbox-wrapper.js"></script>
+<link type="text/css" src="https://cdn.jsdelivr.net/npm/vue-sandbox-wrapper@1.0.0-beta.5/dist/vue-sandbox-wrapper.css">
 ```
 
 ## API Reference
