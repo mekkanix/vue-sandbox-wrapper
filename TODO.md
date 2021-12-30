@@ -14,6 +14,8 @@
 [Priority: 3]
 
 - Clean `public` folder from test components
+- Use BEM convention for CSS classes
+- Use Vue styleguide conventions for JavaScript
 
 ## [component] VSComplexProp
 

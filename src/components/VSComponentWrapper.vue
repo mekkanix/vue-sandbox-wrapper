@@ -1,10 +1,14 @@
 <template>
   <div class="vs-component-wrapper">
     <div class="vs-component-infos">
+
       <!-- Informations -->
       <div class="vsc-section vsc-meta">
         <div class="vsc-section-title">Informations</div>
-        <div class="vsc-section-frame">
+        <div
+          v-if="componentMetaInfos.length"
+          class="vsc-section-frame"
+        >
           <div class="vsc-meta-panel">
             <ul>
               <li
@@ -22,7 +26,11 @@
             </ul>
           </div>
         </div>
+        <div v-else class="vsc-section-nodata">
+          No informations provided.
+        </div>
       </div>
+
       <!-- Props -->
       <div class="vsc-section vsc-props">
         <div class="vsc-section-title">Props</div>
@@ -52,17 +60,19 @@
             </div>
           </div>
         </template>
-        <template v-else>
-          <div class="vsc-section-nodata">
-            No props defined for this component.
-          </div>
-        </template>
+        <div v-else class="vsc-section-nodata">
+          No props defined.
+        </div>
       </div>
+
     </div>
 
     <div class="vs-component-viewport-container">
       <div class="vs-component-viewport">
-        <div class="vs-component-viewport-render" v-html="renderedHTML" />
+        <div class="vs-component-viewport-render">
+          <slot v-if="isSlottedTestComponent"></slot>
+          <div v-else v-html="renderedHTML"/>
+        </div>
       </div>
     </div>
   </div>
@@ -116,12 +126,17 @@ export default {
      */
     component: {
       type: Object,
-      required: true,
+      // required: true,
+      default: null,
       validator: component => typeof component === 'object',
     },
   },
 
   data: () => ({
+    /**
+     * -
+     */
+    testComponent: null,
     /**
      * List of parsed component's props.
      * Used to generate live-testing form.
@@ -132,7 +147,7 @@ export default {
   }),
 
   watch: {
-    component: {
+    testComponent: {
       handler () {
         this.localFieldsProps = this.getFieldsFormattedPropsFromComponent()
       },
@@ -147,6 +162,14 @@ export default {
   },
 
   computed: {
+    /**
+     * -
+     *
+     * @return  {[type]}  [return description]
+     */
+    isSlottedTestComponent () {
+      return !this.component
+    },
     /**
      * Reducer property used to get component-compliant formatted props
      * (e.g. `propsData`) from `localFieldsProps`.
@@ -167,12 +190,15 @@ export default {
      * @type {string<HTML>}
      */
     renderedHTML () {
-      let instanceConfig = {}
-      if (this.localFieldsProps.length) {
-        instanceConfig.propsData = this.instanceFormattedProps
+      if (this.testComponent) {
+        let instanceConfig = {}
+        if (this.localFieldsProps.length) {
+          instanceConfig.propsData = this.instanceFormattedProps
+        }
+        const componentInstance = new this.vue(Object.assign(instanceConfig, this.testComponent))
+        return componentInstance.$mount().$el.outerHTML
       }
-      const componentInstance = new this.vue(Object.assign(instanceConfig, this.component))
-      return componentInstance.$mount().$el.outerHTML
+      return ''
     },
     /**
      * General informations retrieved from component.
@@ -180,14 +206,44 @@ export default {
      * @type {array}
      */
     componentMetaInfos () {
-      let infos = [
-        { label: 'Component name', value: this.component.name || '-', },
-      ]
-      return infos
+      if (this.testComponent) {
+        let infos = [
+          { label: 'Component name', value: this.testComponent.name || '-', },
+        ]
+        return infos
+      }
+      return []
     },
   },
 
   methods: {
+    /**
+     * Initialization method that's in charge of detecting the
+     * user-chosen component testing method (script/slot), then
+     * set `testComponent` from provided component.
+     *
+     * @return  {[type]}  [return description]
+     */
+    init () {
+      if (this.component) {
+        console.log(this.component);
+        this.testComponent = this.component
+      } else {
+        const slots = this.$slots.default
+        // Check for well-formatted slot content
+        if (slots && slots.length !== 1) {
+          console.error('[VueSandbox-wrapper] Only one component per instance is allowed.')
+          return
+        }
+        if (!slots || !slots.length) {
+          console.error('[VueSandbox-wrapper] No component is provided.')
+          return
+        }
+        console.log(slots);
+      }
+
+      this.localFieldsProps = this.getFieldsFormattedPropsFromComponent()
+    },
     /**
      * VueSandbox-formatted fields generated from component's props.
      *
@@ -195,7 +251,7 @@ export default {
      */
     getFieldsFormattedPropsFromComponent () {
       let formattedProps = []
-      if (this.component.props) {
+      if (this.component && this.component.props) {
         for (const [key, value] of Object.entries(this.component.props)) {
           const fieldNativeType = value.type || value
           const fieldValue = this.parsePropValue(value)
@@ -305,7 +361,8 @@ export default {
   },
 
   created () {
-    this.localFieldsProps = this.getFieldsFormattedPropsFromComponent()
+    this.init()
+    // this.localFieldsProps = this.getFieldsFormattedPropsFromComponent()
   },
 }
 </script>
