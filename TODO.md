@@ -17,3 +17,7 @@
 [Priority: 3]
 
 - Clean `public` folder from test components
+
+## [component] VSComplexProp
+
+- Clean & optimize code by using more functions/shared statements
