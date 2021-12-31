@@ -1,20 +1,25 @@
 # <div align="center">VueSandbox-wrapper</div>
 
-This package is a standalone port of the [VueSandbox](git@github.com:mekkanix/vue-sandbox-wrapper.git)'s live-testing system.
-
-It is designed to be integrated in an existing codebase, and provides an "out-of-the-box" working Vue component for live-testing Vue components in your application.
-
-*If you're looking for the complete VueSandbox utility, you can find it [here](https://github.com/mekkanix/vue-sandbox).*
-
 ### Disclaimer
 
-This package is still in an unstable version (beta.5) so it's not suitable for a production-ready usage.
+This package is a Vue-based port of the **VueSandbox**'s
+live-testing system and only contains components needed for that.
+This means it **cannot** be used as a locally-installable utility.
 
-<!-- ## Compatibility
+If you're looking for such tool, please follow instructions [here](https://github.com/mekkanix/vue-sandbox).
 
-Note that **Vue v2.6.8** or greater is required on your project. Vue 3 is not currently supported.
+## Introduction
 
-:warning: Vue is **not** provided in this package and you'll need to inject it manually to the main `VSComponentWrapper` component (as described in the [API Reference](#api-reference) section below).
+This package contains the core system needed to provide a
+components' live-testing feature on your project. It is usable as an importable Vue component (e.g. `VSComponentWrapper`) and is primarily designed to be integrated in an existing Vue.js project.
+
+## Compatibility
+
+### Prerequisites
+
+You'll need the following packages to be installed on your project.
+
+- **Vue v2.6.8** or greater *(Vue3 is not currently supported)*
 
 ### Browsers
 
@@ -34,7 +39,7 @@ Here are the minimum browser versions required for this package to work.
 
 ## Installation
 
-Via `npm` or `yarn`:
+Through `npm` or `yarn`:
 
 ```
 npm i vue-sandbox-wrapper --save
@@ -46,20 +51,14 @@ yarn add vue-sandbox-wrapper
 
 ## Usage
 
-This package is currently bundled in the [UMD](https://github.com/umdjs/umd) format, meaning it can be integrated to your project in several ways.
-
-*Note: This package currently relies on a Vue.js context present in the hosting project. A full working vanilla-based version will be released later.*
+As this package is bundled following the [UMD](https://github.com/umdjs/umd) format, it can be integrated to your project in several ways.
 
 ### Module Builder
-
-This is the preferred method to use.
 
 ```js
 import { VSComponentWrapper } from 'vue-sandbox-wrapper'
 import 'vue-sandbox-wrapper/dist/vue-sandbox-wrapper.css'
 ```
-
-*Note: A plugin-based version (allowing global `VSComponentWrapper` registration) will be released later.*
 
 ### HTML `<script>` tags
 
@@ -70,14 +69,18 @@ import 'vue-sandbox-wrapper/dist/vue-sandbox-wrapper.css'
 
 ## API Reference
 
-#### Component: `VSComponentWrapper`
+This section references all options available when using this package.
 
-**Props**
+### Components
+
+#### # VSComponentWrapper
+
+***Props***
 
 | Name      | Type     | Required | Default | Description |
 |:---------:|:--------:|:--------:|:-------:|:-----------:|
 | vue       | function | Yes      | -       | The Vue constructor. |
-| component | object  | Yes      | -       | Compiled Vue component you want to live-test. |
+| component | object   | Yes      | -       | The **compiled** version of the component needed for live-test. |
 
 ## Licensing
 
@@ -85,5 +88,5 @@ Released under the [MIT](https://opensource.org/licenses/MIT) license.
 
 ## Contribute
 
-Soon... -->
+Soon...
 

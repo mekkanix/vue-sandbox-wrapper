@@ -3,9 +3,10 @@
 [Priority: 1]
 
 - Optimize libs/pkgs/codebase to reduce final bundle size
-- Allow use from VSComponentWrapper's slot-inserted components
+- Allow use from VSComponentWrapper's slot-inserted components (if possible)
 - Check for a child-components' rendering strategy
 - Check feasibility & create a legacy `<script>`-based version of the pkg (= programmatic way)
+- Create a Vue plugin-based usage
 
 [Priority: 2]
 
