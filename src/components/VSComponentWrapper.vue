@@ -171,6 +171,23 @@ export default {
       return !this.component
     },
     /**
+     * -
+     *
+     * @return  {[type]}  [return description]
+     */
+    isValidSlottedTestComponent () {
+      const slots = this.$slots.default
+      if (slots && slots.length !== 1) {
+        console.error('[VueSandbox-wrapper] Only one component per instance is allowed.')
+        return false
+      }
+      if (!slots || !slots.length) {
+        console.error('[VueSandbox-wrapper] No component is provided.')
+        return false
+      }
+      return true
+    },
+    /**
      * Reducer property used to get component-compliant formatted props
      * (e.g. `propsData`) from `localFieldsProps`.
      *
@@ -214,6 +231,52 @@ export default {
       }
       return []
     },
+
+    slottedTestComponent () {
+      if (this.isSlottedTestComponent && this.isValidSlottedTestComponent) {
+        return this.$slots.default[0]
+      }
+      return null
+    },
+    parsedComponentName () {
+      if (!this.isSlottedTestComponent) {
+        return this.component.name
+      } else {
+        const comp = this.slottedTestComponent
+        return comp.componentInstance.$options._componentTag || null
+      }
+    },
+    parsedComponentProps () {
+      if (!this.isSlottedTestComponent) {
+        return this.component.props
+      } else {
+        const comp = this.slottedTestComponent
+        console.log(comp);
+        return this.slottedTestComponent
+      }
+    },
+
+    localFormattedComponentProps () {
+      let formattedProps = []
+      if (this.component && this.component.props) {
+        for (const [key, value] of Object.entries(this.component.props)) {
+          const fieldNativeType = value.type || value
+          const fieldValue = this.parsePropValue(value)
+          const fieldNativeStrType = formatFromNativeToNativeStrType(fieldNativeType)
+          const prop = {
+            name: key,
+            type: formatFromNativeType(fieldNativeType),
+            nativeType: fieldNativeStrType,
+            value: fieldValue,
+          }
+          if (!['$object', '$array',].includes(prop.type)) {
+            prop.userValue = this.formatPropUserValue(fieldValue, formatFromNativeStrType(fieldNativeStrType))
+          }
+          formattedProps.push(prop)
+        }
+      }
+      return formattedProps
+    },
   },
 
   methods: {
@@ -226,20 +289,11 @@ export default {
      */
     init () {
       if (this.component) {
-        console.log(this.component);
         this.testComponent = this.component
       } else {
-        const slots = this.$slots.default
-        // Check for well-formatted slot content
-        if (slots && slots.length !== 1) {
-          console.error('[VueSandbox-wrapper] Only one component per instance is allowed.')
-          return
+        if (this.isValidSlottedTestComponent) {
+          console.log(this.parsedComponentName, this.parsedComponentProps);
         }
-        if (!slots || !slots.length) {
-          console.error('[VueSandbox-wrapper] No component is provided.')
-          return
-        }
-        console.log(slots);
       }
 
       this.localFieldsProps = this.getFieldsFormattedPropsFromComponent()
@@ -361,7 +415,9 @@ export default {
   },
 
   created () {
-    this.init()
+    this.$nextTick(() => {
+      this.init()
+    })
     // this.localFieldsProps = this.getFieldsFormattedPropsFromComponent()
   },
 }
