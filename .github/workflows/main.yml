@@ -1,0 +1,17 @@
+name: Main CI
+
+# Hooks
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+
+# Jobs
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: npm-release
+        run: npm publish
