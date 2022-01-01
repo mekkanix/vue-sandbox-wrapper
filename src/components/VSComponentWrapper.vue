@@ -86,15 +86,11 @@ import {
 } from '@/helpers/Formatter.js'
 import { isOfPrimitiveType, } from '@/helpers/Type.js'
 import VSComplexProp from '@/components/VSComplexProp.vue'
-import VSPropObjectField from '@/components/VSPropObjectField.vue'
-import VSPropArrayField from '@/components/VSPropArrayField.vue'
 
 export default {
   name: 'VSComponentWrapper',
   components: {
     VSComplexProp,
-    VSPropObjectField,
-    VSPropArrayField,
   },
 
   props: {
