@@ -167,12 +167,15 @@ export default {
      * @type {string<HTML>}
      */
     renderedHTML () {
-      let instanceConfig = {}
-      if (this.localFieldsProps.length) {
-        instanceConfig.propsData = this.instanceFormattedProps
+      if (this.component && this.component.compiledObject) {
+        let instanceConfig = {}
+        if (this.localFieldsProps.length) {
+          instanceConfig.propsData = this.instanceFormattedProps
+        }
+        const comp = Object.assign(instanceConfig, this.component.compiledObject)
+        const compInstance = new this.vue(comp)
+        return compInstance.$mount().$el.outerHTML
       }
-      const componentInstance = new this.vue(Object.assign(instanceConfig, this.component))
-      return componentInstance.$mount().$el.outerHTML
     },
     /**
      * General informations retrieved from component.
@@ -187,6 +190,14 @@ export default {
     },
   },
 
+  /**
+   * Comp. Hooks
+   */
+
+  created () {
+    this.localFieldsProps = this.getFieldsFormattedPropsFromComponent()
+  },
+
   methods: {
     /**
      * VueSandbox-formatted fields generated from component's props.
@@ -195,8 +206,9 @@ export default {
      */
     getFieldsFormattedPropsFromComponent () {
       let formattedProps = []
-      if (this.component.props) {
-        for (const [key, value] of Object.entries(this.component.props)) {
+      const vComp = this.component.compiledObject
+      if (vComp && vComp.props) {
+        for (const [key, value] of Object.entries(vComp.props)) {
           const fieldNativeType = value.type || value
           const fieldValue = this.parsePropValue(value)
           const fieldNativeStrType = formatFromNativeToNativeStrType(fieldNativeType)
@@ -302,10 +314,6 @@ export default {
           return value
       }
     },
-  },
-
-  created () {
-    this.localFieldsProps = this.getFieldsFormattedPropsFromComponent()
   },
 }
 </script>
