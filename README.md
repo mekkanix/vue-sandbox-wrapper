@@ -1,17 +1,10 @@
 # <div align="center">VueSandbox-wrapper</div>
 
-### Disclaimer
+*This package is a Vue-based port of the [VueSandbox](https://github.com/mekkanix/vue-sandbox)'s live-testing system. It is only usable as an importable Vue component (UMD module), and is designed to be integrated into an existing Vue.js codebase.*
 
-This package is a Vue-based port of the **VueSandbox**'s
-live-testing system and only contains components needed for that.
-This means it **cannot** be used as a locally-installable utility.
+*If you're looking for the complete installable utility, please follow instructions [here](https://mekkanix.github.io/vue-sandbox/docs/).*
 
-If you're looking for such tool, please follow instructions [here](https://github.com/mekkanix/vue-sandbox).
-
-## Introduction
-
-This package contains the core system needed to provide a
-components' live-testing feature on your project. It is usable as an importable Vue component (e.g. `VSComponentWrapper`) and is primarily designed to be integrated in an existing Vue.js project.
+---
 
 ## Compatibility
 
@@ -20,6 +13,8 @@ components' live-testing feature on your project. It is usable as an importable 
 You'll need the following packages to be installed on your project.
 
 - **Vue v2.6.8** or greater *(Vue3 is not currently supported)*
+
+*Note that Vue.js is not included in order to limit the output bundle size, so you'll need to provide your own Vue constructor when using VS-wrapper (see the [API Reference](#api-reference) for detail).*
 
 ### Browsers
 
@@ -73,14 +68,17 @@ This section references all options available when using this package.
 
 ### Components
 
-#### # VSComponentWrapper
+#### > VSComponentWrapper
+
+It's the main component used for live-testing. It manages the whole live-testing system by providing the viewport area and the live-testing panel.  
+Use it anywhere you want to have this UI displayed on your app.
 
 ***Props***
 
-| Name      | Type     | Required | Default | Description |
-|:---------:|:--------:|:--------:|:-------:|:-----------:|
-| vue       | function | Yes      | -       | The Vue constructor. |
-| component | object   | Yes      | -       | The **compiled** version of the component needed for live-test. |
+| Name           | Type     | Required | Default | Description |
+|:--------------:|:--------:|:--------:|:-------:|:-----------:|
+| vue            | function | Yes      | -       | The Vue constructor. |
+| compiledObject | object   | Yes      | -       | The **compiled** object of the component that needs to be live-tested. |
 
 ## Licensing
 
