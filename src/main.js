@@ -1,6 +1,6 @@
 /*!
- * VueSandbox-wrapper v1.0.0-beta.6
- * (c) 2021-2021 Mekkanix
+ * VueSandbox-wrapper v1.0.0-beta.7
+ * (c) 2021-2022 Mekkanix
  * Released under the MIT License.
  */
 
