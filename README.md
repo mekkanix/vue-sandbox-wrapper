@@ -1,6 +1,6 @@
 # <div align="center">VueSandbox-wrapper</div>
 
-*This package is a Vue-based port of the [VueSandbox](https://github.com/mekkanix/vue-sandbox)'s live-testing system. It is only usable as an importable Vue component (UMD module), and is designed to be integrated into an existing Vue.js codebase.*
+*This package is a Vue-based port of the [VueSandbox](https://github.com/mekkanix/vue-sandbox)'s live-testing system. It is only usable as an importable Vue component ([UMD](https://github.com/umdjs/umd) module), and is designed to be integrated into an existing Vue.js codebase.*
 
 *If you're looking for the complete installable utility, please follow instructions [here](https://mekkanix.github.io/vue-sandbox/docs/).*
 
