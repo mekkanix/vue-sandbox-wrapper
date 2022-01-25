@@ -70,15 +70,15 @@ This section references all options available when using this package.
 
 #### > VSComponentWrapper
 
-It's the main component used for live-testing. It manages the whole live-testing system by providing the viewport area and the live-testing panel.  
-Use it anywhere you want to have this UI displayed on your app.
+This is the main component used for live-testing, allowing live-edit of component's props.  
+Displays a user-editable area alongside a viewport containing the component's render.
 
 ***Props***
 
 | Name           | Type     | Required | Default | Description |
 |:--------------:|:--------:|:--------:|:-------:|:-----------:|
 | vue            | function | Yes      | -       | The Vue constructor. |
-| compiledObject | object   | Yes      | -       | The **compiled** object of the component that needs to be live-tested. |
+| compiledObject | object   | Yes      | -       | The **compiled** version of the component that needs to be live-tested (more infos [here](https://github.com/vuejs/vue/tree/dev/packages/vue-template-compiler#readme)). |
 
 ## Licensing
 
