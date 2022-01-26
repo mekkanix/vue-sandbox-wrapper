@@ -64,8 +64,6 @@ import 'vue-sandbox-wrapper/dist/vue-sandbox-wrapper.css'
 
 ## API Reference
 
-This section references all options available when using this package.
-
 ### Components
 
 #### > VSComponentWrapper
@@ -78,7 +76,9 @@ Use it anywhere you want to have this UI displayed on your app.
 | Name           | Type     | Required | Default | Description |
 |:--------------:|:--------:|:--------:|:-------:|:-----------:|
 | vue            | function | Yes      | -       | The Vue constructor. |
-| compiledObject | object   | Yes      | -       | The **compiled** object of the component that needs to be live-tested. |
+| compiledObject | object   | Yes      | -       | The **compiled** version of the component. |
+
+***Note:*** *The "compiled" component refers to the **JavaScript object** (e.g. programmatic version) built from the corresponding Vue SFC file, using bundlers like [webpack](https://github.com/webpack/webpack) or [Rollup](https://github.com/rollup/rollup) (more infos [here](https://github.com/vuejs/vue-loader#readme)).*
 
 ## Licensing
 
