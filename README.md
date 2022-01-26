@@ -68,8 +68,8 @@ import 'vue-sandbox-wrapper/dist/vue-sandbox-wrapper.css'
 
 #### > VSComponentWrapper
 
-It's the main component used for live-testing. It manages the whole live-testing system by providing the viewport area and the live-testing panel.  
-Use it anywhere you want to have this UI displayed on your app.
+This is the main component used for live-testing, allowing live-edit of component's props.  
+Displays a user-editable area alongside a viewport containing the component's render.
 
 ***Props***
 
